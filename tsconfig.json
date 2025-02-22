@@ -36,6 +36,6 @@
 , "scripts/reset-auth.js"  ],
   "exclude": [
     "node_modules",
-    "sst.config.ts"
+    "sst.config.ts","sst.config.ts"
   ]
 }
