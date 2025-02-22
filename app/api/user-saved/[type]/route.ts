@@ -178,7 +178,7 @@ export async function DELETE(
         }
         body = JSON.parse(rawBody);
     } catch (error) {
-        return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        return NextResponse.json({ error: 'Invalid request body:' + error }, { status: 400 });
     }
 
     const { userId, id } = body;

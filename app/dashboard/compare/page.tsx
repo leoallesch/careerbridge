@@ -103,7 +103,7 @@ export default function JobTablePage() {
     [selectedAttribute]: job[selectedAttribute as keyof Job],
   }));
 
-  if (status === "loading" || loading) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return (

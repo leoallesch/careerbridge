@@ -1,4 +1,4 @@
-import ResetPasswordContent from "./auth/reset-password";
+import ResetPasswordContent from "./reset-password";
 
 export default async function ResetPasswordPage({
   searchParams,
