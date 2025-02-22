@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import NextStepInfoCard from "@/components/dashboard/next-step-info-card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
-import { Program, DefaultSectionProps } from "@/lib/types";
+import { DefaultSectionProps } from "@/lib/types";
+import { Program } from "@prisma/client";
 
 interface NextStepsSectionProps extends DefaultSectionProps {
   savedPrograms: Program[];
@@ -17,7 +18,7 @@ export default function NextStepsSection({
   className,
 }: NextStepsSectionProps) {
   const selectedProgramData = savedPrograms.find(
-    (program) => program.name === selectedProgram
+    (program) => program.programName === selectedProgram
   );
 
   return (
@@ -32,16 +33,16 @@ export default function NextStepsSection({
             <Card
               key={index}
               className={`cursor-pointer hover:bg-accent transition-colors ${
-                selectedProgram === program.name
+                selectedProgram === program.programName
                   ? "bg-accent border-2 border-primary"
                   : ""
               }`}
-              onClick={() => handleProgramClick(program.name)}
+              onClick={() => handleProgramClick(program.programName)}
             >
               <CardContent className="p-4">
-                <h3 className="font-semibold">{program.name}</h3>
+                <h3 className="font-semibold">{program.programName}</h3>
                 <p className="text-sm text-muted-foreground">
-                  {program.school} - {program.duration}
+                  {program.schoolName} - {program.timeToCompletion}
                 </p>
               </CardContent>
             </Card>
@@ -56,13 +57,11 @@ export default function NextStepsSection({
 
       {selectedProgramData && (
         <NextStepInfoCard
-          name={selectedProgramData.name}
-          school={selectedProgramData.school}
-          duration={selectedProgramData.duration}
-          description={selectedProgramData.description}
-          cost={selectedProgramData.cost}
-          certification={selectedProgramData.certification}
-          jobPlacementRate={selectedProgramData.jobPlacementRate}
+          name={selectedProgramData.programName}
+          school={selectedProgramData.schoolName}
+          duration={selectedProgramData.timeToCompletion}
+          cost={selectedProgramData.costOfAttendance}
+          jobPlacementRate={selectedProgramData.jobPlacement}
           className="mt-8 mb-8"
         />
       )}

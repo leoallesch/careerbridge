@@ -15,9 +15,9 @@ interface JobInfoCardProps {
   description: string;
   salary: string | number;
   requiredTraining: string;
-  laborDemand: "Low" | "Medium" | "High";
+  laborDemand: string;
   roiYears: number;
-  promotionOpportunities: "Limited" | "Moderate" | "Good" | "Excellent";
+  promotionOpportunities: string;
   className?: string;
 }
 

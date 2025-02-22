@@ -16,7 +16,7 @@ export default function PathwayExplorationSection({
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Button variant="outline" asChild>
-          <Link href="/interests" className="flex items-center justify-between">
+          <Link href="/dashboard/interests" className="flex items-center justify-between">
             Get Started <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>

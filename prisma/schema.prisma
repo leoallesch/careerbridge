@@ -9,15 +9,19 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String    @unique
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  accounts      Account[]
-  sessions      Session[]
+  id                String              @id
+  name              String
+  email             String              @unique
+  emailVerified     Boolean
+  image             String?
+  createdAt         DateTime
+  updatedAt         DateTime
+  accounts          Account[]
+  sessions          Session[]
+  UserSavedJob      UserSavedJob[]
+  UserSavedProgram  UserSavedProgram[]
+  UserSavedInterest UserSavedInterest[]
+  UserSavedIndustry UserSavedIndustry[]
 
   @@map("user")
 }
@@ -64,4 +68,112 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Industry {
+  industryId   Int                 @id
+  name         String
+  icon         String
+  jobs         Job[]
+  programs     Program[]
+  interests    Interest[]
+  savedByUsers UserSavedIndustry[]
+
+  @@map("industry")
+}
+
+model Job {
+  jobId               Int            @id
+  industryId          Int
+  jobTitle            String
+  jobDesc             String
+  avgSalary           Float
+  requiredTraining    String
+  growthOpportunities String
+  avgTrainingCost     Float
+  avgTrainingTime     Int
+  roiPercent          Float
+  roiYears            Float
+  industry            Industry       @relation(fields: [industryId], references: [industryId], onDelete: Cascade)
+  savedByUsers        UserSavedJob[]
+
+  @@map("job")
+}
+
+model Program {
+  programId        Int                @id
+  industryId       Int
+  schoolName       String
+  programName      String
+  website          String
+  contactInfo      String
+  costOfAttendance Float
+  timeToCompletion Int
+  acceptanceRate   Float
+  jobPlacement     Float
+  location         String
+  industry         Industry           @relation(fields: [industryId], references: [industryId], onDelete: Cascade)
+  savedByUsers     UserSavedProgram[]
+
+  @@map("program")
+}
+
+model Interest {
+  interestId   Int                 @id
+  industryId   Int
+  name         String
+  icon         String
+  industry     Industry            @relation(fields: [industryId], references: [industryId], onDelete: Cascade)
+  savedByUsers UserSavedInterest[]
+
+  @@map("interest")
+}
+
+// Update UserSaved tables too
+model UserSavedJob {
+  id        String   @id @default(uuid())
+  userId    String
+  jobId     Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job      @relation(fields: [jobId], references: [jobId], onDelete: Cascade)
+
+  @@unique([userId, jobId])
+  @@map("user_saved_job")
+}
+
+model UserSavedProgram {
+  id        String   @id @default(uuid())
+  userId    String
+  programId Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  program   Program  @relation(fields: [programId], references: [programId], onDelete: Cascade)
+
+  @@unique([userId, programId])
+  @@map("user_saved_program")
+}
+
+model UserSavedInterest {
+  id         String   @id @default(uuid())
+  userId     String
+  interestId Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  interest   Interest @relation(fields: [interestId], references: [interestId], onDelete: Cascade)
+
+  @@unique([userId, interestId])
+  @@map("user_saved_interest")
+}
+
+model UserSavedIndustry {
+  id         String   @id @default(uuid())
+  userId     String
+  industryId Int
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  industry   Industry @relation(fields: [industryId], references: [industryId], onDelete: Cascade)
+
+  @@unique([userId, industryId])
+  @@map("user_saved_industry")
 }

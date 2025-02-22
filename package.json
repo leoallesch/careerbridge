@@ -8,9 +8,7 @@
     "dev": "next dev --turbopack",
     "lint": "next lint",
     "start": "next start",
-    "prisma:generate": "sst shell \"npx prisma generate\"",
-    "prisma:push": "sst shell \"npx prisma db push\"",
-    "prisma:studio": "sst shell \"npx prisma studio\""
+    "seed": "ts-node prisma/seed"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.743.0",
@@ -55,6 +53,7 @@
     "postcss": "^8",
     "prisma": "^6.4.1",
     "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

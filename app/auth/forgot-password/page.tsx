@@ -45,7 +45,7 @@ export default function ForgotPassword() {
     await authClient.forgetPassword(
       {
         email: email,
-        redirectTo: "/reset-password",
+        redirectTo: "/auth/reset-password",
       },
       {
         onRequest: () => {
@@ -54,7 +54,7 @@ export default function ForgotPassword() {
         onSuccess: () => {
           toast({ title: "Reset Password Email Sent!" });
           form.reset();
-          router.push("/forgot-password/confirmation");
+          router.push("/auth/forgot-password/confirmation");
         },
         onError: (ctx) => {
           toast({
@@ -75,7 +75,7 @@ export default function ForgotPassword() {
         backButtons={[
           {
             label: "Don't need to reset password? Login",
-            href: "/login",
+            href: "/auth/login",
           },
         ]}
       >
