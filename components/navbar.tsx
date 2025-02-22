@@ -8,10 +8,10 @@ export default function Navbar() {
       <div className="flex h-14 items-center justify-between px-4">
         <nav className="flex items-center space-x-4">
           <Link href="/" className="font-bold">
-            CareerBridge
+            careerbridge
           </Link>
-          <Link href="/dashboard">Dashboard</Link>
-          <Link href="/skills">Skills</Link>
+          <Link href="/dashboard">dashboard</Link>
+          <Link href="/interests">interests</Link>
         </nav>
         <UserButton />
       </div>
