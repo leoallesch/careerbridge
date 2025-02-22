@@ -76,7 +76,7 @@ export default function ResetPasswordContent({
         onSuccess: () => {
           toast({ title: "Password Reset!", description: "Please Log In." });
           form.reset();
-          router.push("/login");
+          router.push("/auth/login");
         },
         onError: (ctx) => {
           toast({
@@ -97,7 +97,7 @@ export default function ResetPasswordContent({
         headerLabel="Please complete the form to reset your password"
         title="Password Reset"
         backButtons={[
-          { label: "Don't need to reset password? Login", href: "/login" },
+          { label: "Don't need to reset password? Login", href: "/auth/login" },
         ]}
       >
         <Form {...form}>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -8,9 +10,11 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
 import { DefaultSectionProps } from "@/lib/types";
+import { Interest } from "@prisma/client";
+import { DynamicFaIcon } from "../icon/dynamic-fa-icon";
 
 interface SkillsSectionProps extends DefaultSectionProps {
-  skills: string[];
+  skills: Interest[]; // Changed from string[] to Job[]
 }
 
 export default function SkillsSection({
@@ -22,13 +26,20 @@ export default function SkillsSection({
     <DashboardSection title="Skills" editHref={editHref} className={className}>
       <Carousel className="w-full max-w-3xl mx-auto">
         <CarouselContent>
-          {skills.map((skill, index) => (
-            <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
+          {skills.map((skill) => (
+            <CarouselItem
+              key={skill.interestId} // Use jobId for unique key
+              className="md:basis-1/3 lg:basis-1/4"
+            >
               <div className="p-1">
                 <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <CardContent className="flex aspect-square flex-col items-center justify-center p-6 gap-4">
+                    <DynamicFaIcon
+                      name={skill.icon}
+                      className="text-3xl text-primary"
+                    />
                     <span className="text-lg font-semibold text-center">
-                      {skill}
+                      {skill.name}
                     </span>
                   </CardContent>
                 </Card>

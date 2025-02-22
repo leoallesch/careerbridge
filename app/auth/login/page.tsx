@@ -80,9 +80,9 @@ export default function Login() {
         backButtons={[
           {
             label: "Don't have an account? Create one",
-            href: "/register",
+            href: "/auth/register",
           },
-          { label: "Forgot your password?", href: "/forgot-password" },
+          { label: "Forgot your password?", href: "/auth/forgot-password" },
         ]}
       >
         <Form {...form}>

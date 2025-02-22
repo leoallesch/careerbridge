@@ -11,7 +11,7 @@ export default function Navbar() {
             Career<span className="text-blue-600">Bridge</span>
           </Link>
           <Link href="/dashboard">Dashboard</Link>
-          <Link href="/interests">interests</Link>
+          <Link href="/dashboard/interests">interests</Link>
         </nav>
         <UserButton />
       </div>

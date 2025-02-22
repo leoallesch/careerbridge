@@ -72,7 +72,7 @@ export default function Register() {
           form.reset();
 
           router.refresh();
-          router.push("/register/confirmation");
+          router.push("/auth/register/confirmation");
         },
         onError: (ctx) => {
           toast({
@@ -93,7 +93,7 @@ export default function Register() {
         headerLabel="Create an account"
         title="Register"
         backButtons={[
-          { label: "Already have an account? Login", href: "/login" },
+          { label: "Already have an account? Login", href: "/auth/login" },
         ]}
       >
         <Form {...form}>
