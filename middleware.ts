@@ -17,13 +17,13 @@ export default async function authMiddleware(request: NextRequest) {
     },
   );
 
-  if (session && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // if (session && isAuthPage) {
+  //   return NextResponse.redirect(new URL("/dashboard", request.url));
+  // }
 
-  if (!session && isAppPage) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
-  }
+  // if (!session && isAppPage) {
+  //   return NextResponse.redirect(new URL("/auth/login", request.url));
+  // }
 
   return NextResponse.next();
 }
