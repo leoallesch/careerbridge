@@ -1,34 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Heart } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React,{useState} from "react";
+import {cn} from "@/lib/utils";
+import {Heart} from "lucide-react";
+import {Button} from "@/components/ui/button";
 import {
   PiCode,
   PiBriefcase,
   PiCalculator,
   PiGlobe,
-  PiWrench,
+  PiWrench
 } from "react-icons/pi";
 import Link from "next/link";
+import {Tile} from '@/components/tile';
+import {TileGrid} from '@/components/tile-grid';
+import {TileCarousel} from '@/components/tile-carousel';
+import {TileScroll} from '@/components/tile-grid-scroll';
 
 // Define the type for a job object
-type Job = {
+type Job={
   name: string;
   description: string;
   icon: React.ReactNode;
 };
 
 // Define the type for favoriteJobs state
-type FavoriteJobs = {
+type FavoriteJobs={
   [key: string]: boolean;
 };
 
-const DashSkills = () => {
-  const [favoriteJobs, setFavoriteJobs] = useState<FavoriteJobs>({});
+const DashSkills=() => {
+  const [favoriteJobs,setFavoriteJobs]=useState<FavoriteJobs>({});
 
-  const jobList: { programming: Job[] } = {
+  const jobList: {programming: Job[];}={
     programming: [
       {
         name: "Web Developer",
@@ -98,18 +102,112 @@ const DashSkills = () => {
     ],
   };
 
-  const handleFavorite = (job: string) => {
+  const handleFavorite=(job: string) => {
     setFavoriteJobs((prevFavorites) => ({
       ...prevFavorites,
       [job]: !prevFavorites[job],
     }));
   };
 
-  const selectedSkill = "programming"; // Hardcoded for demo
-  const jobsToShow = jobList[selectedSkill] || [];
+  const [gridConfig,setGridConfig]=useState({rows: 5,cols: 4}); // State for grid config
+
+
+  const selectedSkill="programming"; // Hardcoded for demo
+  const jobsToShow=jobList[selectedSkill]||[];
 
   return (
+
     <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md border max-w-7xl mx-auto">
+
+      <TileGrid rows={1} columns={5} className="max-w-2xl">
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Home Dashboard"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="User Management"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="System Settings"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Messages"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+      </TileGrid>
+
+      <TileCarousel>
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Home Dashboard"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="User Management"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="System Settings"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Messages"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+        <Tile
+          icon={<PiCode size={32} />}
+          text="Programming"
+        />
+      </TileCarousel>
+
+      <TileScroll className="w-full max-w-5xl mx-auto h-[10vh] max-h-[80vh] bg-white rounded-lg shadow-md border border-gray-200">
+        <TileGrid rows={1} columns={5} className="max-w-2xl">
+          <Tile
+            icon={<PiCode size={32} />}
+            text="Home Dashboard"
+          />
+          <Tile
+            icon={<PiCode size={32} />}
+            text="User Management"
+          />
+          <Tile
+            icon={<PiCode size={32} />}
+            text="System Settings"
+          />
+          <Tile
+            icon={<PiCode size={32} />}
+            text="Messages"
+          />
+          <Tile
+            icon={<PiCode size={32} />}
+            text="Programming"
+          />
+        </TileGrid>
+      </TileScroll>
+
+
+
       <p className="text-lg font-semibold mb-6 text-center">
         Select cards to learn more about each job, favorite the ones you are
         interested in
@@ -132,7 +230,7 @@ const DashSkills = () => {
               onClick={() => handleFavorite(job.name)}
             >
               <Heart
-                className={cn(favoriteJobs[job.name] && "text-red-500")}
+                className={cn(favoriteJobs[job.name]&&"text-red-500")}
                 size={20}
               />
             </button>
