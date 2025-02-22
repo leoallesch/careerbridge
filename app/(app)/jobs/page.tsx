@@ -12,6 +12,7 @@ import {
   PiWrench,
 } from "react-icons/pi";
 import Link from "next/link";
+import PageWrapper from "@/components/page-wrapper";
 
 // Define the type for a job object
 type Job = {
@@ -25,7 +26,7 @@ type FavoriteJobs = {
   [key: string]: boolean;
 };
 
-const DashSkills = () => {
+const JobsPage = () => {
   const [favoriteJobs, setFavoriteJobs] = useState<FavoriteJobs>({});
 
   const jobList: { programming: Job[] } = {
@@ -109,12 +110,13 @@ const DashSkills = () => {
   const jobsToShow = jobList[selectedSkill] || [];
 
   return (
-    <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md border max-w-7xl mx-auto">
-      <p className="text-lg font-semibold mb-6 text-center">
-        Select cards to learn more about each job, favorite the ones you are
-        interested in
-      </p>
-
+    <PageWrapper
+      title="Select cards to learn more about each job, favorite the ones you are interested in"
+      pageNavProps={{
+        back: { href: "/interests", label: "See Interests" },
+        forward: { href: "/compare", label: "Compare Jobs" },
+      }}
+    >
       {/* Job Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {jobsToShow.map((job) => (
@@ -139,18 +141,8 @@ const DashSkills = () => {
           </div>
         ))}
       </div>
-
-      {/* Back Button */}
-      <nav className="flex justify-between items-center w-full mt-8">
-        <Link href="/interests">
-          <Button>Interests</Button>
-        </Link>
-        <Link href="/compare">
-          <Button>Compare Jobs</Button>
-        </Link>
-      </nav>
-    </div>
+    </PageWrapper>
   );
 };
 
-export default DashSkills;
+export default JobsPage;

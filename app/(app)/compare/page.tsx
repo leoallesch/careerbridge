@@ -19,6 +19,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import PageWrapper from "@/components/page-wrapper";
 
 // Define Job type
 type Job = {
@@ -87,10 +88,15 @@ export default function JobTablePage() {
   }));
 
   return (
-    <div className="container mx-auto p-4">
-      <Card className="mb-8">
+    <PageWrapper
+      title="Compare your job options"
+      pageNavProps={{
+        back: { href: "/jobs", label: "See Jobs" },
+        forward: { href: "/next-steps", label: "Next Steps" },
+      }}
+    >
+      <Card>
         <CardHeader>
-          <CardTitle>Job Comparison Chart</CardTitle>
           <Tabs
             value={selectedAttribute}
             onValueChange={(value) =>
@@ -156,14 +162,6 @@ export default function JobTablePage() {
           ))}
         </TableBody>
       </Table>
-      <nav className="flex justify-between items-center w-full mt-8">
-        <Link href="/interests/interest_dash">
-          <Button>Interest Dash</Button>
-        </Link>
-        <Link href="/next-steps">
-          <Button>Next Steps</Button>
-        </Link>
-      </nav>
-    </div>
+    </PageWrapper>
   );
 }
