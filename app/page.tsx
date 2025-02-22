@@ -1,12 +1,14 @@
 import Link from "next/link";
 import FeatureCard from "@/components/dashboard/feature-card";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 import landingimageone from "@/public/assets/landingimageone.png";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-white text-center px-4">
-      <main className="max-w-1xl mx-auto w-full flex flex-col items-center gap-12 flex-grow px-4">
+      <main className="max-w-1xl mx-auto w-full flex flex-col items-center gap-10 flex-grow px-4">
         <div className="flex flex-col items-center gap-4 mt-40 mb-40">
           {" "}
           {/* Increased margin-top and margin-bottom */}
@@ -14,12 +16,21 @@ export default function Home() {
             we know college isn&apos;t for everybody
           </p>
           <h1 className="text-5xl md:text-5xl font-bold ">
-            Unlock Your <span className="text-blue-600">Future</span> in the
+            Unlock Your <span className="text-primary">Future</span> in the
             Trades
           </h1>
+          <Button 
+            variant="outline" 
+            asChild 
+            className="bg-primary text-white font-semibold text-lg py-3 px-6 rounded-md hover:bg-primary hover:text-white hover:scale-105"
+          >
+            <Link href="/dashboard" className="flex items-center justify-between">
+              Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
         <h1 className="text-5xl md:text-5xl font-bold ">
-          Our <span className="text-blue-600">Platform</span>
+          Our <span className="text-primary">Platform</span>
         </h1>
 
         <div className="max-w-6xl mx-auto my-12 flex flex-col md:flex-row items-center gap-8 p-6">
@@ -34,7 +45,7 @@ export default function Home() {
               <p className="text-gray-600">
                 Additional content or components can go here, like:
               </p>
-              <Link href="/signup" className="text-blue-600 hover:underline">
+              <Link href="/signup" className="text-primary hover:underline">
                 Sign Up Now
               </Link>
             </div>

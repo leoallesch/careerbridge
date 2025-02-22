@@ -14,10 +14,17 @@ export default function PathwayExplorationSection({
       editHref={editHref}
       className={className}
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Button variant="outline" asChild>
-          <Link href="/dashboard/interests" className="flex items-center justify-between">
-            Get Started <ArrowRight className="ml-2 h-4 w-4" />
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-10">
+        <Button
+          variant="outline"
+          asChild
+          className="bg-primary text-white font-semibold text-lg pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
+        >
+          <Link
+            href="/dashboard/interests"
+            className="flex items-center justify-between"
+          >
+            Get Started <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>
       </div>

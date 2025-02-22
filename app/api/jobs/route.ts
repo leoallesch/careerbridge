@@ -1,6 +1,7 @@
 // app/api/jobs/route.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: Request) {
     try {
@@ -13,8 +14,8 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: "No industryId or jobIds provided" }, { status: 400 });
         }
 
-        // Build the where clause based on provided parameters
-        const whereClause: any = {};
+        // Build the where clause with explicit typing
+        const whereClause: Prisma.JobWhereInput = {};
         if (industryIds.length) {
             whereClause.industryId = { in: industryIds };
         }

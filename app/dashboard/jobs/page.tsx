@@ -6,18 +6,24 @@ import { Tile } from "@/components/tile/tile";
 import { TileGrid } from "@/components/tile/tile-grid";
 import JobsSection from "@/components/dashboard/jobs-section";
 import { useSession } from "@/lib/auth-client";
-import { Industry, Job } from "@prisma/client";
+import { Interest, Industry, Job } from "@prisma/client";
 
 const JobsPage = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const [industries, setIndustries] = useState<Industry[]>([]);
-  const [selectedIndustryId, setSelectedIndustryId] = useState<number | null>(null);
+  const [selectedIndustryId, setSelectedIndustryId] = useState<number | null>(
+    null
+  );
   const [industryJobs, setIndustryJobs] = useState<Job[]>([]);
   const [savedJobs, setSavedJobs] = useState<number[]>([]);
   const [favoriteJobs, setFavoriteJobs] = useState<Job[]>([]);
-  const [selectedJobIndustry, setSelectedJobIndustry] = useState<string | null>(null);
-  const [selectedJobFavorite, setSelectedJobFavorite] = useState<string | null>(null);
+  const [selectedJobIndustry, setSelectedJobIndustry] = useState<string | null>(
+    null
+  );
+  const [selectedJobFavorite, setSelectedJobFavorite] = useState<string | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,27 +31,40 @@ const JobsPage = () => {
     const fetchInitialData = async () => {
       try {
         // Fetch saved interests
-        const savedInterestsRes = await fetch(`/api/user-saved/interest?userId=${userId}`);
-        if (!savedInterestsRes.ok) throw new Error("Failed to fetch saved interests");
+        const savedInterestsRes = await fetch(
+          `/api/user-saved/interest?userId=${userId}`
+        );
+        if (!savedInterestsRes.ok)
+          throw new Error("Failed to fetch saved interests");
         const savedInterests = await savedInterestsRes.json();
-        const interestIds = savedInterests.map((item) => item.interestId);
+        const interestIds = savedInterests.map(
+          (item: { interest: Interest }) => item.interest.interestId
+        );
 
         // Fetch industries
-        const industriesRes = await fetch(`/api/industries?interestIds=${interestIds.join(",")}`);
+        const industriesRes = await fetch(
+          `/api/industries?interestIds=${interestIds.join(",")}`
+        );
         if (!industriesRes.ok) throw new Error("Failed to fetch industries");
         const industriesData = await industriesRes.json();
         setIndustries(industriesData);
 
         // Fetch saved jobs
-        const savedJobsRes = await fetch(`/api/user-saved/job?userId=${userId}`);
+        const savedJobsRes = await fetch(
+          `/api/user-saved/job?userId=${userId}`
+        );
         if (!savedJobsRes.ok) throw new Error("Failed to fetch saved jobs");
         const savedJobsData = await savedJobsRes.json();
-        const savedJobIds = savedJobsData.map((item: { jobId: number }) => item.jobId);
+        const savedJobIds = savedJobsData.map(
+          (item: { jobId: number }) => item.jobId
+        );
         setSavedJobs(savedJobIds);
 
         // Fetch favorite job details
         if (savedJobIds.length > 0) {
-          const jobsRes = await fetch(`/api/jobs?jobIds=${savedJobIds.join(",")}`);
+          const jobsRes = await fetch(
+            `/api/jobs?jobIds=${savedJobIds.join(",")}`
+          );
           if (!jobsRes.ok) throw new Error("Failed to fetch favorite jobs");
           const jobsData = await jobsRes.json();
           setFavoriteJobs(jobsData);
@@ -70,7 +89,9 @@ const JobsPage = () => {
       setIndustryJobs(jobsData);
     } catch (err) {
       console.error("Error fetching industry jobs:", err);
-      setError(err instanceof Error ? err.message : "Failed to load industry jobs");
+      setError(
+        err instanceof Error ? err.message : "Failed to load industry jobs"
+      );
       setIndustryJobs([]);
     }
   };
@@ -86,7 +107,9 @@ const JobsPage = () => {
     const previousFavoriteJobs = [...favoriteJobs];
 
     // Optimistic update
-    setSavedJobs((prev) => (isSaved ? prev.filter((id) => id !== jobId) : [...prev, jobId]));
+    setSavedJobs((prev) =>
+      isSaved ? prev.filter((id) => id !== jobId) : [...prev, jobId]
+    );
     if (isSaved) {
       setFavoriteJobs((prev) => prev.filter((job) => job.jobId !== jobId));
     } else {
@@ -94,7 +117,10 @@ const JobsPage = () => {
       const jobRes = await fetch(`/api/jobs?jobIds=${jobId}`);
       if (jobRes.ok) {
         const jobData = await jobRes.json();
-        setFavoriteJobs((prev) => [...prev, ...jobData.filter((j: Job) => j.jobId === jobId)]);
+        setFavoriteJobs((prev) => [
+          ...prev,
+          ...jobData.filter((j: Job) => j.jobId === jobId),
+        ]);
       }
     }
 

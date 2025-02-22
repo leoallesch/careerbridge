@@ -67,9 +67,6 @@ export default function JobsSection({
                       <span className="text-lg font-semibold">
                         {job.jobTitle}
                       </span>
-                      <span className="text-sm text-muted-foreground">
-                        {job.company}
-                      </span>
                       {canFavorite && (
                         <Button
                           variant="ghost"

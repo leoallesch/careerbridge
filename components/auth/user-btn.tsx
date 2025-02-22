@@ -59,9 +59,14 @@ const UserButton: React.FC = () => {
     );
   }
 
+  
   if (!session?.user) {
     return (
-      <Button variant="outline" asChild>
+      <Button 
+            variant="outline"  
+            asChild 
+            className="bg-primary text-white font-medium text-md pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
+          >        
         <Link href="/auth/login">Sign In</Link>
       </Button>
     );
