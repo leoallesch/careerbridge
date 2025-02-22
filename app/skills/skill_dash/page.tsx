@@ -1,0 +1,93 @@
+// app/skills/skill_dash/page.tsx
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { useSearchParams, useRouter } from 'next/navigation'; // Import useRouter
+import { Heart } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { PiCode, PiBriefcase, PiCalculator, PiPencil, PiPaintBrush, PiMusicNote, PiCamera, PiBookOpen, PiGlobe, PiHeart, PiWrench, PiPlant, PiBowlFood, PiChevronLeft } from "react-icons/pi"; // Import PiChevronLeft
+
+
+const DashSkills = () => {
+    const [favoriteJobs, setFavoriteJobs] = useState({});
+    const searchParams = useSearchParams();
+    const router = useRouter(); // Initialize useRouter
+    const carouselRef = useRef(null);
+
+    const jobList = {
+        // ... (jobList remains the same)
+        programming: [
+            { name: "Web Developer", description: "Builds websites and web applications.", icon: <PiCode size={32} /> },
+            { name: "Software Engineer", description: "Designs, develops, and maintains software systems.", icon: <PiCode size={32} /> },
+            { name: "Data Scientist", description: "Analyzes data to extract insights and solve problems.", icon: <PiCalculator size={32} /> },
+            { name: "Mobile App Developer", description: "Creates applications for mobile devices.", icon: <PiCode size={32} /> },
+            { name: "Database Administrator", description: "Manages and maintains databases.", icon: <PiBriefcase size={32} /> },
+            { name: "Game Developer", description: "Develops video games for various platforms.", icon: <PiCode size={32} /> },
+            { name: "Cybersecurity Analyst", description: "Protects computer systems and networks from threats.", icon: <PiGlobe size={32} /> },
+            { name: "AI/ML Engineer", description: "Develops artificial intelligence and machine learning models.", icon: <PiCode size={32} /> },
+            { name: "DevOps Engineer", description: "Manages and automates software development and deployment.", icon: <PiWrench size={32} /> },
+            { name: "Front-End Developer", description: "Develops the user interface of websites and applications.", icon: <PiCode size={32} /> },
+            { name: "Back-End Developer", description: "Develops the server-side logic and infrastructure of applications.", icon: <PiCode size={32} /> },
+            { name: "Full-Stack Developer", description: "Develops both the front-end and back-end of applications.", icon: <PiCode size={32} /> },
+        ]
+      };
+    
+      const handleFavorite = (job) => {
+        setFavoriteJobs((prevFavorites) => ({
+          ...prevFavorites,
+          [job]: !prevFavorites[job],
+        }));
+      };
+    
+      const selectedSkill = "programming"; // Hardcoded for demo
+      const jobsToShow = jobList[selectedSkill] || [];
+    
+      // Function to scroll the carousel
+      const scrollCarousel = (direction) => {
+        if (carouselRef.current) {
+          const scrollAmount = 300; // Adjust scroll amount as needed
+          carouselRef.current.scrollLeft += direction * scrollAmount;
+        }
+      };
+    const handleBack = () => {
+      router.back(); // Navigate back a page
+    };
+
+    return (
+        <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md border max-w-7xl mx-auto">
+          <p className="text-lg font-semibold mb-6 text-center">
+            Select cards to learn more about each job, favorite the ones you are interested in
+          </p>
+    
+          {/* Job Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> {/* Added grid layout */}
+            {jobsToShow.map((job) => (
+              <div
+                key={job.name}
+                className="border rounded-md p-4 w-full bg-gray-100 relative flex flex-col" // w-full for responsive width
+              >
+                <div className="flex items-center justify-center mb-2">
+                  {job.icon}
+                </div>
+                <p className="font-medium text-center">{job.name}</p>
+                <p className="text-sm mt-2">{job.description}</p>
+                <button
+                  className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
+                  onClick={() => handleFavorite(job.name)}
+                >
+                  <Heart className={cn(favoriteJobs[job.name] && "text-red-500")} size={20} />
+                </button>
+              </div>
+            ))}
+          </div>
+    
+            {/* Back Button */}
+            <Button className="mt-8" onClick={handleBack}>
+                Back
+            </Button>
+        </div>
+    );
+};
+
+export default DashSkills;
