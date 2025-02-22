@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
-import {cn} from '@/lib/utils';
+} from "@/components/ui/carousel";
+import {cn} from "@/lib/utils";
 
 interface TileCarouselProps {
   children: React.ReactNode;
@@ -21,10 +21,10 @@ export const TileCarousel: React.FC<TileCarouselProps>=({
 }) => {
   return (
     <Carousel
-      className={cn('w-full max-w-5xl mx-auto',className)}
+      className={cn("w-full max-w-5xl mx-auto",className)}
       opts={{
-        align: 'start',
-        loop: true,
+        align: "start",
+        loop: false, // Disable infinite scrolling
       }}
     >
       <CarouselContent className="-ml-2">

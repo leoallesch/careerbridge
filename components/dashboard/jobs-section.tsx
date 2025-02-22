@@ -5,14 +5,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
+import {Card,CardContent} from "@/components/ui/card";
 import JobInfoCard from "@/components/dashboard/job-info-card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
-import { Job, DefaultSectionProps } from "@/lib/types";
+import {Job,DefaultSectionProps} from "@/lib/types";
 
 interface JobsSectionProps extends DefaultSectionProps {
   jobs: Job[];
-  selectedJob: string | null;
+  selectedJob: string|null;
   handleJobClick: (jobTitle: string) => void;
 }
 
@@ -23,21 +23,20 @@ export default function JobsSection({
   editHref,
   className,
 }: JobsSectionProps) {
-  const selectedJobData = jobs.find((job) => job.title === selectedJob);
+  const selectedJobData=jobs.find((job) => job.title===selectedJob);
 
   return (
     <DashboardSection title="Jobs" editHref={editHref} className={className}>
       <Carousel className="w-full max-w-3xl mx-auto">
         <CarouselContent>
-          {jobs.map((job, index) => (
+          {jobs.map((job,index) => (
             <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
               <div className="p-1">
                 <Card
-                  className={`cursor-pointer hover:bg-accent transition-colors ${
-                    selectedJob === job.title
-                      ? "bg-accent border-2 border-primary"
-                      : ""
-                  }`}
+                  className={`cursor-pointer hover:bg-accent transition-colors ${selectedJob===job.title
+                    ? "bg-accent border-2 border-primary"
+                    :""
+                    }`}
                   onClick={() => handleJobClick(job.title)}
                 >
                   <CardContent className="flex aspect-square flex-col items-center justify-center p-6">
@@ -55,7 +54,7 @@ export default function JobsSection({
         <CarouselNext />
       </Carousel>
 
-      {selectedJobData && (
+      {selectedJobData&&(
         <JobInfoCard
           title={selectedJobData.title}
           description={selectedJobData.description}
