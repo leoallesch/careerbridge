@@ -37,7 +37,7 @@ const UserButton: React.FC = () => {
       await signOut({
         fetchOptions: {
           onSuccess: () => {
-            router.push("/login");
+            router.push("/auth/login");
           },
           onError: (error) => {
             console.error("Sign-out failed:", error);
@@ -67,7 +67,7 @@ const UserButton: React.FC = () => {
             asChild 
             className="bg-primary text-white font-medium text-md pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
           >        
-        <Link href="/login">Sign In</Link>
+        <Link href="/auth/login">Sign In</Link>
       </Button>
     );
   }

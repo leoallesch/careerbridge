@@ -14,11 +14,9 @@ import { Label } from "@/components/ui/label";
 interface NextStepInfoCardProps {
   name: string;
   school: string;
-  duration: string;
-  description: string;
+  duration: string | number;
   cost: string | number;
-  certification: string;
-  jobPlacementRate: string;
+  jobPlacementRate: string | number;
   className?: string;
 }
 
@@ -26,9 +24,7 @@ export default function NextStepInfoCard({
   name,
   school,
   duration,
-  description,
   cost,
-  certification,
   jobPlacementRate,
   className,
 }: NextStepInfoCardProps) {
@@ -45,20 +41,10 @@ export default function NextStepInfoCard({
         </div>
 
         <div className="grid gap-2">
-          <Label className="font-semibold">Description</Label>
-          <p className="text-muted-foreground">{description}</p>
-        </div>
-
-        <div className="grid gap-2">
           <Label className="font-semibold">Cost</Label>
           <p className="text-muted-foreground">
             {typeof cost === "number" ? `$${cost.toLocaleString()}` : cost}
           </p>
-        </div>
-
-        <div className="grid gap-2">
-          <Label className="font-semibold">Certification</Label>
-          <p className="text-muted-foreground">{certification}</p>
         </div>
 
         <div className="grid gap-2">
