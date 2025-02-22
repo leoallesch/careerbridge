@@ -11,8 +11,6 @@ export default function Navbar() {
             CareerBridge
           </Link>
           <Link href="/dashboard">Dashboard</Link>
-          <Link href="/dashboard">Skills</Link>
-          <Link href="/dashboard">Jobs</Link>
         </nav>
         <UserButton />
       </div>
