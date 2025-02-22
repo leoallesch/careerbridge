@@ -29,6 +29,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import PageWrapper from "@/components/layout/page-wrapper";
 
 const interestsSelect = () => {
   const [selectedInterests, setSelectedInterests] = useState([]);
@@ -166,11 +167,12 @@ const interestsSelect = () => {
   const visibleInterests = interestsList.slice(0, maxRows * 4);
 
   return (
-    <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md border">
-      <p className="text-lg font-semibold mb-6 text-center">
-        Let's start by picking your interests ...
-      </p>
-
+    <PageWrapper
+      title="Let's start by picking your interests"
+      pageNavProps={{
+        forward: { href: "/jobs", label: "See Jobs" },
+      }}
+    >
       <div
         className="grid grid-cols-4 gap-4 overflow-y-auto"
         style={{ maxHeight: `${maxRows * (32 + 16 + 30)}px` }}
@@ -193,11 +195,7 @@ const interestsSelect = () => {
           </div>
         ))}
       </div>
-
-      <Link href="/interests/interest_dash">
-        <Button className="mt-8">Next</Button>
-      </Link>
-    </div>
+    </PageWrapper>
   );
 };
 

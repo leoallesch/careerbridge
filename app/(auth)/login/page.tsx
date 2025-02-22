@@ -55,7 +55,7 @@ export default function Login() {
         onSuccess: () => {
           toast({ title: "Login Sucessfull! Redirecting..." });
           form.reset();
-          
+
           router.refresh();
           router.push("/dashboard");
         },
@@ -80,9 +80,9 @@ export default function Login() {
         backButtons={[
           {
             label: "Don't have an account? Create one",
-            href: "/auth/register",
+            href: "/register",
           },
-          { label: "Forgot your password?", href: "/auth/forgot-password" },
+          { label: "Forgot your password?", href: "/forgot-password" },
         ]}
       >
         <Form {...form}>
