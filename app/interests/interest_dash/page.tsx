@@ -142,8 +142,8 @@ const DashSkills = () => {
 
       {/* Back Button */}
       <nav className="flex justify-between items-center w-full mt-8">
-        <Link href="/skills">
-          <Button>Skills</Button>
+        <Link href="/interests">
+          <Button>Interests</Button>
         </Link>
         <Link href="/compare">
           <Button>Compare Jobs</Button>

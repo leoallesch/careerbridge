@@ -9,11 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ChartContainer,
   ChartTooltip,
@@ -21,6 +17,8 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 // Define Job type
 type Job = {
@@ -71,11 +69,13 @@ const attributeOptions = [
 ];
 
 export default function JobTablePage() {
-  const [selectedAttribute, setSelectedAttribute] = useState<JobAttribute>("salary");
+  const [selectedAttribute, setSelectedAttribute] =
+    useState<JobAttribute>("salary");
 
   const chartConfig = {
     [selectedAttribute]: {
-      label: attributeOptions.find((opt) => opt.value === selectedAttribute)?.label,
+      label: attributeOptions.find((opt) => opt.value === selectedAttribute)
+        ?.label,
       color: "hsl(var(--chart-1))",
     },
   };
@@ -93,7 +93,9 @@ export default function JobTablePage() {
           <CardTitle>Job Comparison Chart</CardTitle>
           <Tabs
             value={selectedAttribute}
-            onValueChange={(value) => setSelectedAttribute(value as JobAttribute)}
+            onValueChange={(value) =>
+              setSelectedAttribute(value as JobAttribute)
+            }
             className="w-full"
           >
             <TabsList className="grid w-full grid-cols-4">
@@ -154,6 +156,14 @@ export default function JobTablePage() {
           ))}
         </TableBody>
       </Table>
+      <nav className="flex justify-between items-center w-full mt-8">
+        <Link href="/interests/interest_dash">
+          <Button>Interest Dash</Button>
+        </Link>
+        <Link href="/next-steps">
+          <Button>Next Steps</Button>
+        </Link>
+      </nav>
     </div>
   );
 }
