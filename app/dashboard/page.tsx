@@ -23,6 +23,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!userId) {
+        setLoading(false); // Rely on middleware to redirect if no userId
+        return;
+      }
+
       try {
         // Fetch saved interests and extract Interest objects
         const savedInterestsRes = await fetch(
@@ -32,9 +37,10 @@ export default function Dashboard() {
           throw new Error("Failed to fetch saved interests");
         const savedInterestsData = await savedInterestsRes.json();
         const interestsData = savedInterestsData.map(
-          (item: { interest: Interest }) => item.interest // Extract the Interest object
+          (item: { interest: Interest }) => item.interest
         );
         setInterests(interestsData);
+        console.log("Fetched Interests:", interestsData);
 
         // Fetch saved jobs
         const savedJobsRes = await fetch(
@@ -89,44 +95,6 @@ export default function Dashboard() {
     setSelectedJob(selectedJob === jobTitle ? null : jobTitle);
   };
 
-  const toggleFavorite = async (jobId: number) => {
-    if (!userId) return;
-
-    const isSaved = savedJobs.includes(jobId);
-    const previousSavedJobs = [...savedJobs];
-    const previousFavoriteJobs = [...favoriteJobs];
-
-    setSavedJobs((prev) =>
-      isSaved ? prev.filter((id) => id !== jobId) : [...prev, jobId]
-    );
-    if (isSaved) {
-      setFavoriteJobs((prev) => prev.filter((job) => job.jobId !== jobId));
-    } else {
-      const jobRes = await fetch(`/api/jobs?jobIds=${jobId}`);
-      if (jobRes.ok) {
-        const jobData = await jobRes.json();
-        setFavoriteJobs((prev) => [
-          ...prev,
-          ...jobData.filter((j: Job) => j.jobId === jobId),
-        ]);
-      }
-    }
-
-    try {
-      const payload = { userId, id: jobId };
-      const res = await fetch("/api/user-saved/job", {
-        method: isSaved ? "DELETE" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Failed to toggle favorite");
-    } catch (err) {
-      console.error("Error toggling favorite:", err);
-      setSavedJobs(previousSavedJobs);
-      setFavoriteJobs(previousFavoriteJobs);
-    }
-  };
-
   const handleProgramClick = (programName: string) => {
     setSelectedProgram(selectedProgram === programName ? null : programName);
   };
@@ -148,7 +116,6 @@ export default function Dashboard() {
         savedJobs={savedJobs}
         selectedJob={selectedJob}
         handleJobClick={handleJobClick}
-        onToggleFavorite={toggleFavorite}
         showJobInfo={true}
         editHref="/dashboard/jobs"
       />

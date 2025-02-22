@@ -42,7 +42,6 @@ export default function Navbar() {
             career<span className="text-primary">bridge</span>
           </Link>
           <Link href="/dashboard">Dashboard</Link>
-          <Link href="/dashboard/interests">interests</Link>
         </nav>
         <div className="flex items-center space-x-4">
           <button
