@@ -9,7 +9,7 @@ export default function Home() {
       <main className="max-w-1xl mx-auto w-full flex flex-col items-center gap-12 flex-grow px-4">
         <div className="flex flex-col items-center gap-4 mt-40 mb-40"> {/* Increased margin-top and margin-bottom */}
           <p className="text-gray-500 text-sm md:text-base">
-            we know a college isn't for everybody
+            we know a college isn&apos;t for everybody
           </p>
           <h1 className="text-5xl md:text-5xl font-bold ">
             Unlock Your <span className="text-blue-600">Future</span> in the Trades
