@@ -16,10 +16,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import PageWrapper from "@/components/page-wrapper";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import PageWrapper from "@/components/layout/page-wrapper";
 
 // Define Job type
 type Job = {

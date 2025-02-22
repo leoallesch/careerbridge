@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import UserButton from "./user-btn";
+import UserButton from "../auth/user-btn";
 
 export default function Navbar() {
   return (

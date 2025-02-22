@@ -23,10 +23,12 @@ import CardWrapper from "@/components/auth/card-wrapper";
 const ResetPasswordSchema = z
   .object({
     password: z.string().min(passwordLength, {
-      message: "Password must be at least " + passwordLength + " characters long",
+      message:
+        "Password must be at least " + passwordLength + " characters long",
     }),
     passwordConfirmation: z.string().min(passwordLength, {
-      message: "Password must be at least " + passwordLength + " characters long",
+      message:
+        "Password must be at least " + passwordLength + " characters long",
     }),
   })
   .superRefine((data, ctx) => {
@@ -45,7 +47,9 @@ type ResetPasswordContentProps = {
   searchParams: { token?: string }; // This matches the resolved searchParams
 };
 
-export default function ResetPasswordContent({ searchParams }: ResetPasswordContentProps) {
+export default function ResetPasswordContent({
+  searchParams,
+}: ResetPasswordContentProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -72,7 +76,7 @@ export default function ResetPasswordContent({ searchParams }: ResetPasswordCont
         onSuccess: () => {
           toast({ title: "Password Reset!", description: "Please Log In." });
           form.reset();
-          router.push("/auth/login");
+          router.push("/login");
         },
         onError: (ctx) => {
           toast({
@@ -93,7 +97,7 @@ export default function ResetPasswordContent({ searchParams }: ResetPasswordCont
         headerLabel="Please complete the form to reset your password"
         title="Password Reset"
         backButtons={[
-          { label: "Don't need to reset password? Login", href: "/auth/login" },
+          { label: "Don't need to reset password? Login", href: "/login" },
         ]}
       >
         <Form {...form}>
