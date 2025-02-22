@@ -5,12 +5,10 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SocialProvider } from "@/utils/types";
 
-// import { oAuthSignIn } from "../../app/auth/actions";
-
 type OAuthProvider = {
   name: SocialProvider;
   displayName: string;
-  icon?: JSX.Element;
+  icon?: React.ReactNode;
 };
 
 export function OAuthButtons() {

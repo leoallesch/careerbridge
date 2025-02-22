@@ -11,9 +11,9 @@ export const auth = betterAuth({
         enabled: true,
         minPasswordLength: passwordLength,
         requireEmailVerification: false,
-        sendResetPassword: async ({ user, url, token }, request) => {
-            await console.log(user.email, url, token);
-        }
+        // sendResetPassword: async ({ user, url, token }, request) => {
+        //     await console.log(user.email, url, token);
+        // }
     },
     socialProviders: {
         google: {

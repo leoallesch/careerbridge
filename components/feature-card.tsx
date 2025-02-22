@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import * as React from "react";
 
 interface FeatureCardProps {
@@ -32,7 +33,7 @@ export default function FeatureCard({
             </ul>
           </div>
           <div className="md:w-1/2 w-full">
-            <img
+            <Image
               src={imageSrc}
               alt={imageAlt}
               className="object-cover rounded-lg w-full h-auto"
@@ -44,7 +45,7 @@ export default function FeatureCard({
       ):(
         <>
           <div className="md:w-1/2 w-full">
-            <img
+            <Image
               src={imageSrc}
               alt={imageAlt}
               className="object-cover rounded-lg w-full h-auto"

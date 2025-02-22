@@ -1,4 +1,3 @@
-// JobTablePage.jsx
 "use client";
 
 import { useState } from "react";
@@ -23,8 +22,21 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// Define Job type
+type Job = {
+  id: number;
+  title: string;
+  salary: number;
+  roiSchooling: number;
+  jobSatisfaction: number;
+  workLifeBalance: number;
+};
+
+// Valid attribute keys
+type JobAttribute = keyof Omit<Job, "id" | "title">;
+
 // Sample job data
-const jobsData = [
+const jobsData: Job[] = [
   {
     id: 1,
     title: "Software Engineer",
@@ -52,14 +64,14 @@ const jobsData = [
 ];
 
 const attributeOptions = [
-  { value: "salary", label: "Salary ($)" },
-  { value: "roiSchooling", label: "ROI on Schooling" },
-  { value: "jobSatisfaction", label: "Job Satisfaction (%)" },
-  { value: "workLifeBalance", label: "Work-Life Balance (%)" },
+  { value: "salary" as const, label: "Salary ($)" },
+  { value: "roiSchooling" as const, label: "ROI on Schooling" },
+  { value: "jobSatisfaction" as const, label: "Job Satisfaction (%)" },
+  { value: "workLifeBalance" as const, label: "Work-Life Balance (%)" },
 ];
 
 export default function JobTablePage() {
-  const [selectedAttribute, setSelectedAttribute] = useState("salary");
+  const [selectedAttribute, setSelectedAttribute] = useState<JobAttribute>("salary");
 
   const chartConfig = {
     [selectedAttribute]: {
@@ -68,7 +80,7 @@ export default function JobTablePage() {
     },
   };
 
-  // Prepare chart data: each job with the selected attribute
+  // Prepare chart data
   const chartData = jobsData.map((job) => ({
     name: job.title,
     [selectedAttribute]: job[selectedAttribute],
@@ -81,7 +93,7 @@ export default function JobTablePage() {
           <CardTitle>Job Comparison Chart</CardTitle>
           <Tabs
             value={selectedAttribute}
-            onValueChange={setSelectedAttribute}
+            onValueChange={(value) => setSelectedAttribute(value as JobAttribute)}
             className="w-full"
           >
             <TabsList className="grid w-full grid-cols-4">

@@ -11,6 +11,11 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("Frontend", {});
+    new sst.aws.Nextjs("Frontend", {
+      domain: {
+        name: "career.swftcontent.com",
+        redirects: ["www.career.swftcontent.com"]
+      }
+    });
   },
 });
