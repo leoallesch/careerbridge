@@ -19,10 +19,10 @@ import { Heart } from "lucide-react";
 interface JobsSectionProps {
   title?: string;
   jobs: Job[];
-  savedJobs: number[];
+  savedJobs?: number[]; // Optional
   selectedJob: string | null;
   handleJobClick: (jobTitle: string) => void;
-  onToggleFavorite: (jobId: number) => Promise<void>;
+  onToggleFavorite?: (jobId: number) => Promise<void>; // Optional
   showJobInfo?: boolean;
   className?: string;
   editHref?: string;
@@ -40,6 +40,7 @@ export default function JobsSection({
   editHref,
 }: JobsSectionProps) {
   const selectedJobData = jobs.find((job) => job.jobTitle === selectedJob);
+  const canFavorite = !!onToggleFavorite; // Check if favoriting is enabled
 
   return (
     <DashboardSection title={title} className={className} editHref={editHref}>
@@ -50,7 +51,7 @@ export default function JobsSection({
           <CarouselContent>
             {jobs.map((job) => (
               <CarouselItem
-                key={job.jobId} // Unique key prop here
+                key={job.jobId}
                 className="md:basis-1/3 lg:basis-1/4"
               >
                 <div className="p-1">
@@ -69,23 +70,25 @@ export default function JobsSection({
                       <span className="text-sm text-muted-foreground">
                         {job.company}
                       </span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="absolute top-2 right-2"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onToggleFavorite(job.jobId);
-                        }}
-                      >
-                        <Heart
-                          className={`h-5 w-5 ${
-                            savedJobs.includes(job.jobId)
-                              ? "fill-red-500 text-red-500"
-                              : "text-gray-500"
-                          }`}
-                        />
-                      </Button>
+                      {canFavorite && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="absolute top-2 right-2"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onToggleFavorite!(job.jobId); // Safe due to canFavorite check
+                          }}
+                        >
+                          <Heart
+                            className={`h-5 w-5 ${
+                              savedJobs.includes(job.jobId)
+                                ? "fill-red-500 text-red-500"
+                                : "text-gray-500"
+                            }`}
+                          />
+                        </Button>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
