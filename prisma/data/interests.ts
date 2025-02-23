@@ -1,6 +1,4 @@
-import { Interest } from "@prisma/client"
-
-export const interests: Interest[] = [
+exports.interests = [
   // Healthcare Support Occupations (industryId: 1)
   { interestId: 1, industryId: 1, name: 'Caregiving', icon: 'FaHandsHelping' },
   { interestId: 2, industryId: 1, name: 'Health support', icon: 'FaHeartbeat' },
@@ -65,4 +63,3 @@ export const interests: Interest[] = [
   { interestId: 48, industryId: 12, name: 'Logistics', icon: 'FaTruck' },
 ];
 
-exports.interests = interests;
