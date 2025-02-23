@@ -1,7 +1,7 @@
 import Link from "next/link";
 import FeatureCard from "@/components/dashboard/feature-card";
-import {Button} from "@/components/ui/button";
-import {ArrowRight} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 import landingimageone from "@/public/assets/landingimageone.png";
 import landingimagetwo from "@/public/assets/landingimagetwo.png";
@@ -25,7 +25,10 @@ export default function Home() {
             asChild
             className="bg-primary text-white font-semibold text-lg py-3 px-6 rounded-md hover:bg-primary hover:text-white hover:scale-105"
           >
-            <Link href="/dashboard" className="flex items-center justify-between">
+            <Link
+              href="/dashboard"
+              className="flex items-center justify-between"
+            >
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
@@ -35,19 +38,27 @@ export default function Home() {
         </h1>
 
         <p className="text-gray-700 text-2xl md:text-2xl font-bold leading-relaxed">
-          Many students embark on their educational journey without a clear career direction, often overlooking rewarding opportunities in the skilled trades. Meanwhile, industries face critical labor shortages, offering high-demand, well-paying jobs.
+          Many students embark on their educational journey without a clear
+          career direction, often overlooking rewarding opportunities in the
+          skilled trades. Meanwhile, industries face critical labor shortages,
+          offering high-demand, well-paying jobs.
         </p>
 
         <div className="max-w-6xl mx-auto my-12 flex flex-col md:flex-row items-center gap-5 p-6">
           <div className="md:w-1/2 w-full">
             <p className="text-lg md:text-lg font-semibold leading-relaxed">
-              contentbridge is here to bridge the gap, helping students explore, evaluate, and connect with the right trade school opportunities through an interactive, data-driven platform. If you'd like to take a dive, click here to
+              contentbridge is here to bridge the gap, helping students explore,
+              evaluate, and connect with the right trade school opportunities
+              through an interactive, data-driven platform. If you&apos;d like to
+              take a dive, click here to
             </p>
           </div>
           <div className="md:w-1/2 w-full">
             <div className="bg-gray-100 p-4 rounded-lg shadow-md">
               <p className="text-gray-600">
-                Learn more about how CareerBridge 2025 can help you find the perfect trade career with personalized guidance and resources. If you'd like to take a dive, click here to
+                Learn more about how CareerBridge 2025 can help you find the
+                perfect trade career with personalized guidance and resources.
+                If you&apos;d like to take a dive, click here to
               </p>
               <Link href="/signup" className="text-primary hover:underline">
                 Sign Up Now

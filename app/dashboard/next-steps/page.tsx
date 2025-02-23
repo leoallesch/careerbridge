@@ -7,7 +7,6 @@ import NextStepsSection from "@/components/dashboard/next-steps-section";
 import {Job,Program} from "@prisma/client";
 import {useSession} from "@/lib/auth-client";
 import JobsSection from "@/components/dashboard/jobs-section"; // Import the new component
-import {cn} from "@/lib/utils";
 
 export default function JobTrainingTabs() {
   const {data: session}=useSession();

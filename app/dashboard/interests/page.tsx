@@ -94,7 +94,6 @@ const InterestsPage=() => {
     }
   };
 
-  const maxRows=5;
   const visibleInterests=interests;
 
   // Render exactly 5 skeleton cards while loading

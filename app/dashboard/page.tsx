@@ -13,7 +13,7 @@ export default function Dashboard() {
   const userId = session?.user?.id;
 
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
-  const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
+  const [selectedProgram, setSelectedProgram] = useState<number | null>(null);
   const [interests, setInterests] = useState<Interest[]>([]);
   const [savedJobs, setSavedJobs] = useState<number[]>([]);
   const [favoriteJobs, setFavoriteJobs] = useState<Job[]>([]);
@@ -95,8 +95,8 @@ export default function Dashboard() {
     setSelectedJob(selectedJob === jobTitle ? null : jobTitle);
   };
 
-  const handleProgramClick = (programName: string) => {
-    setSelectedProgram(selectedProgram === programName ? null : programName);
+  const handleProgramClick = (programId: number) => {
+    setSelectedProgram(selectedProgram === programId ? null : programId);
   };
 
   if (loading) return <div>Loading...</div>;
