@@ -121,7 +121,7 @@ export default function JobTablePage() {
             }
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-5 flex justify-center">
+            <TabsList className="grid w-full grid-cols-5 justify-center">
               {attributeOptions.map((attr) => (
                 <TabsTrigger key={attr.value} value={attr.value}>
                   {attr.label}
