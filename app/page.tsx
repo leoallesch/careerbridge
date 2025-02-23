@@ -60,7 +60,7 @@ export default function Home() {
                 perfect trade career with personalized guidance and resources.
                 If you&apos;d like to take a dive, click here to
               </p>
-              <Link href="/signup" className="text-primary hover:underline">
+              <Link href="/auth/register" className="text-primary hover:underline">
                 Sign Up Now
               </Link>
             </div>

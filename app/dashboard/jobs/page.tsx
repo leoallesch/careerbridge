@@ -147,7 +147,6 @@ const JobsPage=() => {
     setSelectedJobFavorite(selectedJobFavorite===jobTitle? null:jobTitle);
   };
 
-  if(loading) return <div>Loading...</div>;
   if(error) return <div>Error: {error}</div>;
 
   return (
@@ -157,6 +156,7 @@ const JobsPage=() => {
         back: {href: "/dashboard/interests",label: "See Interests"},
         forward: {href: "/dashboard/compare",label: "Compare Jobs"},
       }}
+      loading={loading}
     >
       <TileGrid rows={1} columns={5} className="gap-4">
         {industries.map((industry) => (

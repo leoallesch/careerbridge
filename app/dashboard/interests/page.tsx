@@ -4,7 +4,6 @@ import React,{useState,useEffect} from "react";
 import {cn} from "@/lib/utils";
 import PageWrapper from "@/components/layout/page-wrapper";
 import {useSession} from "@/lib/auth-client";
-import {Skeleton} from "@/components/ui/skeleton";
 import {Tile} from "@/components/tile/tile";
 import {TileGrid} from "@/components/tile/tile-grid";
 import {TileScroll} from "@/components/tile/tile-grid-scroll";
@@ -96,24 +95,6 @@ const InterestsPage=() => {
 
   const visibleInterests=interests;
 
-  // Render exactly 5 skeleton cards while loading
-  if(loading) {
-    return (
-      <PageWrapper
-        title="Let's start by picking your interests"
-        pageNavProps={{
-          forward: {href: "/dashboard/jobs",label: "See Jobs"},
-        }}
-      >
-        <div className="grid grid-cols-4 gap-4">
-          {Array.from({length: 4}).map((_,index) => (
-            <Skeleton key={index} className="h-[110px] w-full rounded-md" />
-          ))}
-        </div>
-      </PageWrapper>
-    );
-  }
-
   if(error) return <div>Error: {error}</div>;
 
   return (
@@ -123,6 +104,7 @@ const InterestsPage=() => {
         back: {href: "/dashboard",label: "Dashboard"},
         forward: {href: "/dashboard/jobs",label: "See Jobs"},
       }}
+      loading={loading}
     >
       <TileScroll className={cn("w-auto max-h-[60vh]")}>
         <TileGrid columns={4} className="gap-4">

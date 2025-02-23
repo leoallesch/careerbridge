@@ -7,6 +7,7 @@ import JobsSection from "@/components/dashboard/jobs-section";
 import NextStepsSection from "@/components/dashboard/next-steps-section";
 import { Job, Program, Interest } from "@prisma/client";
 import { useSession } from "@/lib/auth-client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -17,7 +18,8 @@ export default function Dashboard() {
   const [interests, setInterests] = useState<Interest[]>([]);
   const [savedJobs, setSavedJobs] = useState<number[]>([]);
   const [favoriteJobs, setFavoriteJobs] = useState<Job[]>([]);
-  const [savedPrograms, setSavedPrograms] = useState<Program[]>([]);
+  const [savedPrograms, setSavedPrograms] = useState<number[]>([]); // Changed to store program IDs
+  const [favoritePrograms, setFavoritePrograms] = useState<Program[]>([]); // New state for program details
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +31,7 @@ export default function Dashboard() {
       }
 
       try {
-        // Fetch saved interests and extract Interest objects
+        // Fetch saved interests
         const savedInterestsRes = await fetch(
           `/api/user-saved/interest?userId=${userId}`
         );
@@ -40,7 +42,6 @@ export default function Dashboard() {
           (item: { interest: Interest }) => item.interest
         );
         setInterests(interestsData);
-        console.log("Fetched Interests:", interestsData);
 
         // Fetch saved jobs
         const savedJobsRes = await fetch(
@@ -64,21 +65,27 @@ export default function Dashboard() {
           setFavoriteJobs(jobsData);
         }
 
-        // Fetch programs related to saved jobs' industries
-        if (jobsData.length > 0) {
-          const industryIds = [
-            ...new Set(jobsData.map((job) => job.industryId)),
-          ];
-          const programsPromises = industryIds.map((id) =>
-            fetch(`/api/programs?industryId=${id}`).then((res) => {
-              if (!res.ok)
-                throw new Error(`Failed to fetch programs for industry ${id}`);
-              return res.json();
-            })
+        // Fetch saved programs
+        const savedProgramsRes = await fetch(
+          `/api/user-saved/program?userId=${userId}`
+        );
+        if (!savedProgramsRes.ok)
+          throw new Error("Failed to fetch saved programs");
+        const savedProgramsData = await savedProgramsRes.json();
+        const savedProgramIds = savedProgramsData.map(
+          (item: { programId: number }) => item.programId
+        );
+        setSavedPrograms(savedProgramIds);
+
+        // Fetch favorite program details
+        if (savedProgramIds.length > 0) {
+          const programsRes = await fetch(
+            `/api/programs?programIds=${savedProgramIds.join(",")}`
           );
-          const programsDataArrays = await Promise.all(programsPromises);
-          const allPrograms = programsDataArrays.flat();
-          setSavedPrograms(allPrograms);
+          if (!programsRes.ok)
+            throw new Error("Failed to fetch favorite programs");
+          const programsData = await programsRes.json();
+          setFavoritePrograms(programsData);
         }
       } catch (err) {
         console.error("Error fetching initial data:", err);
@@ -99,7 +106,36 @@ export default function Dashboard() {
     setSelectedProgram(selectedProgram === programId ? null : programId);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="container mx-auto p-6">
+        <Skeleton className="h-10 w-1/4 mb-8" />
+        <div className="mb-8">
+          <Skeleton className="h-6 w-1/5 mb-4" />
+          <Skeleton className="h-32 w-full" />
+        </div>
+        <div className="mb-8">
+          <Skeleton className="h-6 w-1/5 mb-4" />
+          <Skeleton className="h-24 w-full" />
+        </div>
+        <div className="mb-8">
+          <Skeleton className="h-6 w-1/5 mb-4" />
+          <div className="space-y-4">
+            <Skeleton className="h-16 w-full" />
+            <Skeleton className="h-16 w-full" />
+          </div>
+        </div>
+        <div>
+          <Skeleton className="h-6 w-1/5 mb-4" />
+          <div className="space-y-4">
+            <Skeleton className="h-20 w-full" />
+            <Skeleton className="h-20 w-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (error) return <div>Error: {error}</div>;
 
   return (
@@ -118,7 +154,8 @@ export default function Dashboard() {
         editHref="/dashboard/jobs"
       />
       <NextStepsSection
-        savedPrograms={savedPrograms}
+        title="Saved Next Steps"
+        savedPrograms={favoritePrograms} // Use favoritePrograms instead of savedPrograms
         selectedProgram={selectedProgram}
         handleProgramClick={handleProgramClick}
         className="w-full"
