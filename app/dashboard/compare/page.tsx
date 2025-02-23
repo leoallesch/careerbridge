@@ -93,7 +93,7 @@ export default function JobTablePage() {
     [selectedAttribute]: {
       label: attributeOptions.find((opt) => opt.value === selectedAttribute)
         ?.label,
-      color: "hsl(var(--chart-1))",
+      color: "var(--primary)",
     },
   };
 
@@ -145,7 +145,7 @@ export default function JobTablePage() {
               <ChartTooltip content={<ChartTooltipContent />} />
               <Bar
                 dataKey={selectedAttribute}
-                fill={`var(--color-${selectedAttribute})`}
+                fill="var(--primary)"
                 radius={4}
               />
             </BarChart>

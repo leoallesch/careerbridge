@@ -16,7 +16,7 @@ export interface PageNavProps {
 
 export function PageNav({ back, forward }: PageNavProps) {
   return (
-    <nav className="flex justify-between items-center w-full p-8">
+    <nav className="btn-primary text-white flex justify-between items-center w-full p-8">
       <div>
         {back && (
           <Link href={back.href}>
