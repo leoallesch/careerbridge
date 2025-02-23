@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import {Button} from "../ui/button";
 import Link from "next/link";
 
 interface BackButtonProps {
@@ -6,7 +6,7 @@ interface BackButtonProps {
   href: string;
 }
 
-export const BackButton = ({ label, href }: BackButtonProps) => {
+export const BackButton=({label,href}: BackButtonProps) => {
   return (
     <Button variant="link" className="font-normal w-full" size="sm" asChild>
       <Link href={href}>{label}</Link>
