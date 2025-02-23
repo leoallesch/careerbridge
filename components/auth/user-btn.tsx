@@ -59,14 +59,13 @@ const UserButton: React.FC = () => {
     );
   }
 
-  
   if (!session?.user) {
     return (
-      <Button 
-            variant="outline"  
-            asChild 
-            className="bg-primary text-white font-medium text-md pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
-          >        
+      <Button
+        variant="outline"
+        asChild
+        className="bg-primary text-white font-medium text-md pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
+      >
         <Link href="/auth/login">Sign In</Link>
       </Button>
     );
@@ -75,26 +74,29 @@ const UserButton: React.FC = () => {
   const user = session.user;
 
   return (
-    <Select
-      onValueChange={(value) => value === "signout" && handleSignOut()}
-      disabled={isPending} // Disable select during pending states
-    >
-      <SelectTrigger className="w-fit h-8 p-0 border-none">
-        <Avatar className="h-8 w-8">
-          <AvatarImage src={user.image || ""} alt={user.name || "User"} />
-          <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-        </Avatar>
-        <SelectValue placeholder="" />
-      </SelectTrigger>
-      <SelectContent>
-        <div className="py-1 px-2">
-          <p className="text-sm font-medium">{user.name || "User"}</p>
-        </div>
-        <SelectItem value="signout" className="cursor-pointer">
-          Sign Out
-        </SelectItem>
-      </SelectContent>
-    </Select>
+    <div className="flex items-center space-x-4">
+      <Link href="/dashboard">Dashboard</Link>
+      <Select
+        onValueChange={(value) => value === "signout" && handleSignOut()}
+        disabled={isPending} // Disable select during pending states
+      >
+        <SelectTrigger className="w-fit h-8 p-0 border-none">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={user.image || ""} alt={user.name || "User"} />
+            <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+          </Avatar>
+          <SelectValue placeholder="" />
+        </SelectTrigger>
+        <SelectContent>
+          <div className="py-1 px-2">
+            <p className="text-sm font-medium">{user.name || "User"}</p>
+          </div>
+          <SelectItem value="signout" className="cursor-pointer">
+            Sign Out
+          </SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 
