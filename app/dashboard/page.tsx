@@ -8,6 +8,7 @@ import NextStepsSection from "@/components/dashboard/next-steps-section";
 import { Job, Program, Interest } from "@prisma/client";
 import { useSession } from "@/lib/auth-client";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function Dashboard() {
   const { data: session } = useSession();
@@ -159,6 +160,7 @@ export default function Dashboard() {
         className="w-full"
         editHref="/dashboard/next-steps"
       />
+      <Link href="/dashboard/local" className="text-semibold text-lg hover:text-primary">Want to get started quick? See some local placements!</Link>
     </div>
   );
 }
