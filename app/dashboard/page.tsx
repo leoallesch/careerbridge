@@ -18,7 +18,6 @@ export default function Dashboard() {
   const [interests, setInterests] = useState<Interest[]>([]);
   const [savedJobs, setSavedJobs] = useState<number[]>([]);
   const [favoriteJobs, setFavoriteJobs] = useState<Job[]>([]);
-  const [savedPrograms, setSavedPrograms] = useState<number[]>([]); // Changed to store program IDs
   const [favoritePrograms, setFavoritePrograms] = useState<Program[]>([]); // New state for program details
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +74,6 @@ export default function Dashboard() {
         const savedProgramIds = savedProgramsData.map(
           (item: { programId: number }) => item.programId
         );
-        setSavedPrograms(savedProgramIds);
 
         // Fetch favorite program details
         if (savedProgramIds.length > 0) {

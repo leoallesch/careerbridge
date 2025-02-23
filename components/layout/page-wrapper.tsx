@@ -1,13 +1,19 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageNav, PageNavProps } from "./page-nav";
 
 interface PageWrapperProps {
   children: React.ReactNode;
   title?: string;
+  subtitle?: string;
   pageNavProps?: PageNavProps;
   className?: string;
   loading?: boolean; // Added loading prop
@@ -21,14 +27,14 @@ export default function PageWrapper({
   loading = false, // Default to false
 }: PageWrapperProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className={`w-full max-w-4xl mx-auto ${className}`}>
+    <div className="min-h-screen flex items-center justify-center p-4 ">
+      <Card className={`w-full max-w-4xl mx-auto bg-white ${className}`}>
         {title && (
           <CardHeader>
             {loading ? (
               <Skeleton className="h-8 w-1/3" />
             ) : (
-              <CardTitle className="text-2xl">{title}</CardTitle>
+                <CardTitle className="text-2xl">{title}</CardTitle>
             )}
           </CardHeader>
         )}

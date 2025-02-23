@@ -1,13 +1,20 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 
 interface DashboardSectionProps {
   title: string;
+  subtitle?: string;
   editHref?: string;
   children: React.ReactNode;
   className?: string;
@@ -15,14 +22,18 @@ interface DashboardSectionProps {
 
 export default function DashboardSection({
   title,
+  subtitle,
   editHref,
   children,
   className,
 }: DashboardSectionProps) {
   return (
-    <Card className={`mb-8 ${className}`}>
+    <Card className={`mb-8 bg-white ${className}`}>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-2xl">{title}</CardTitle>
+        <div>
+          <CardTitle className="text-2xl">{title}</CardTitle>
+          <CardDescription className="text-md mt-1">{subtitle}</CardDescription>
+        </div>
         {editHref && (
           <Button
             variant="ghost"

@@ -9,18 +9,19 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {Card,CardContent} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import JobInfoCard from "@/components/dashboard/job-info-card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
-import {Job} from "@prisma/client";
-import {Button} from "@/components/ui/button";
-import {Heart} from "lucide-react";
+import { Job } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { Heart } from "lucide-react";
 
 interface JobsSectionProps {
   title?: string;
+  subtitle?: string;
   jobs: Job[];
   savedJobs?: number[]; // Optional
-  selectedJob: string|null;
+  selectedJob: string | null;
   handleJobClick: (jobTitle: string) => void;
   onToggleFavorite?: (jobId: number) => Promise<void>; // Optional
   showJobInfo?: boolean;
@@ -29,24 +30,30 @@ interface JobsSectionProps {
 }
 
 export default function JobsSection({
-  title="Industry Jobs",
+  title = "Industry Jobs",
+  subtitle,
   jobs,
-  savedJobs=[],
+  savedJobs = [],
   selectedJob,
   handleJobClick,
   onToggleFavorite,
-  showJobInfo=false,
+  showJobInfo = false,
   className,
   editHref,
 }: JobsSectionProps) {
-  const selectedJobData=jobs.find((job) => job.jobTitle===selectedJob);
-  const canFavorite=!!onToggleFavorite; // Check if favoriting is enabled
+  const selectedJobData = jobs.find((job) => job.jobTitle === selectedJob);
+  const canFavorite = !!onToggleFavorite; // Check if favoriting is enabled
 
   return (
-    <DashboardSection title={title} className={className} editHref={editHref}>
-      {jobs.length===0? (
+    <DashboardSection
+      title={title}
+      subtitle={subtitle}
+      className={className}
+      editHref={editHref}
+    >
+      {jobs.length === 0 ? (
         <div className="text-center py-8">No jobs found</div>
-      ):(
+      ) : (
         <Carousel className="w-full max-w-3xl mx-auto">
           <CarouselContent>
             {jobs.map((job) => (
@@ -56,17 +63,18 @@ export default function JobsSection({
               >
                 <div className="p-3">
                   <Card
-                    className={`cursor-pointer hover:bg-accent hover:shadow-lg hover:scale-105 transition-all duration-200 ${selectedJob===job.jobTitle
-                      ? "bg-accent border-2 border-primary"
-                      :""
-                      }`}
+                    className={`cursor-pointer hover:bg-accent hover:shadow-lg hover:scale-105 transition-all duration-200 ${
+                      selectedJob === job.jobTitle
+                        ? "bg-accent border-2 border-primary"
+                        : ""
+                    }`}
                     onClick={() => handleJobClick(job.jobTitle)}
                   >
                     <CardContent className="flex aspect-square flex-col items-center justify-center p-6 relative">
                       <span className="text-lg font-semibold">
                         {job.jobTitle}
                       </span>
-                      {canFavorite&&(
+                      {canFavorite && (
                         <Button
                           variant="ghost"
                           size="icon"
@@ -77,10 +85,11 @@ export default function JobsSection({
                           }}
                         >
                           <Heart
-                            className={`h-5 w-5 ${savedJobs.includes(job.jobId)
-                              ? "fill-red-500 text-red-500"
-                              :"text-gray-500"
-                              }`}
+                            className={`h-5 w-5 ${
+                              savedJobs.includes(job.jobId)
+                                ? "fill-red-500 text-red-500"
+                                : "text-gray-500"
+                            }`}
                           />
                         </Button>
                       )}
@@ -95,7 +104,7 @@ export default function JobsSection({
         </Carousel>
       )}
 
-      {showJobInfo&&selectedJobData&&(
+      {showJobInfo && selectedJobData && (
         <JobInfoCard
           title={selectedJobData.jobTitle}
           description={selectedJobData.jobDesc}

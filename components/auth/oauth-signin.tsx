@@ -1,18 +1,18 @@
 "use client";
-import { signIn } from "@/lib/auth-client";
-import { Button } from "../ui/button";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { SocialProvider } from "@/utils/types";
+import {signIn} from "@/lib/auth-client";
+import {Button} from "../ui/button";
+import {FaGithub} from "react-icons/fa";
+import {FcGoogle} from "react-icons/fc";
+import {SocialProvider} from "@/utils/types";
 
-type OAuthProvider = {
+type OAuthProvider={
   name: SocialProvider;
   displayName: string;
   icon?: React.ReactNode;
 };
 
 export function OAuthButtons() {
-  const oAuthProviders: OAuthProvider[] = [
+  const oAuthProviders: OAuthProvider[]=[
     {
       name: "google",
       displayName: "Google",
@@ -30,7 +30,7 @@ export function OAuthButtons() {
       {oAuthProviders.map((provider) => (
         <Button
           key={provider.name}
-          className="mt-2 w-full flex items-center justify-center gap-2"
+          className="text-black mt-2 w-full flex items-center justify-center gap-2"
           variant="outline"
           onClick={async () => {
             await signIn.social({

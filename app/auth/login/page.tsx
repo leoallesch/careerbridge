@@ -8,33 +8,33 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { z } from "zod";
+import {z} from "zod";
 import CardWrapper from "@/components/auth/card-wrapper";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { OAuthButtons } from "@/components/auth/oauth-signin";
-import { signIn } from "@/lib/auth-client";
-import { toast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {useState} from "react";
+import {OAuthButtons} from "@/components/auth/oauth-signin";
+import {signIn} from "@/lib/auth-client";
+import {toast} from "@/hooks/use-toast";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
+import {useRouter} from "next/navigation";
 
-const LoginSchema = z.object({
+const LoginSchema=z.object({
   email: z.string().email({
     message: "Please enter a valid email address",
   }),
-  password: z.string().min(1, {
+  password: z.string().min(1,{
     message: "Please enter a valid password",
   }),
 });
-type LoginFormValues = z.infer<typeof LoginSchema>;
+type LoginFormValues=z.infer<typeof LoginSchema>;
 
 export default function Login() {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading,setLoading]=useState(false);
+  const router=useRouter();
 
-  const form = useForm<LoginFormValues>({
+  const form=useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
@@ -42,18 +42,18 @@ export default function Login() {
     },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit=async (values: LoginFormValues) => {
     setLoading(true);
-    const { email, password } = values;
+    const {email,password}=values;
 
     await signIn.email(
-      { email, password },
+      {email,password},
       {
         onRequest: () => {
-          toast({ title: "Please wait..." });
+          toast({title: "Please wait..."});
         },
         onSuccess: () => {
-          toast({ title: "Login Sucessfull! Redirecting..." });
+          toast({title: "Login Sucessfull! Redirecting..."});
           form.reset();
 
           router.refresh();
@@ -82,7 +82,7 @@ export default function Login() {
             label: "Don't have an account? Create one",
             href: "/auth/register",
           },
-          { label: "Forgot your password?", href: "/auth/forgot-password" },
+          {label: "Forgot your password?",href: "/auth/forgot-password"},
         ]}
       >
         <Form {...form}>
@@ -91,7 +91,7 @@ export default function Login() {
               <FormField
                 control={form.control}
                 name="email"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
@@ -108,7 +108,7 @@ export default function Login() {
               <FormField
                 control={form.control}
                 name="password"
-                render={({ field }) => (
+                render={({field}) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
@@ -119,8 +119,8 @@ export default function Login() {
                 )}
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Loading..." : "Login"}
+            <Button type="submit" className="w-full text-white" disabled={loading}>
+              {loading? "Loading...":"Login"}
             </Button>
           </form>
         </Form>

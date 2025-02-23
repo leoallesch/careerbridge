@@ -20,14 +20,14 @@ export function PageNav({ back, forward }: PageNavProps) {
       <div>
         {back && (
           <Link href={back.href}>
-            <Button className="gap-2">{"< " + back.label}</Button>
+            <Button className="gap-2 font-bold">{"<  " + back.label}</Button>
           </Link>
         )}
       </div>
       <div>
         {forward && (
           <Link href={forward.href}>
-            <Button className="gap-2">{forward.label + " >"}</Button>
+            <Button className="gap-2 font-bold">{forward.label + " >"}</Button>
           </Link>
         )}
       </div>

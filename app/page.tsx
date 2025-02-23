@@ -13,7 +13,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4 mt-40 mb-40">
           {" "}
           {/* Increased margin-top and margin-bottom */}
-          <p className="text-gray-500 text-sm md:text-base">
+          <p className="text-gray-700 text-sm md:text-base">
             we know college isn&apos;t for everybody
           </p>
           <h1 className="text-5xl md:text-5xl font-bold ">
@@ -23,7 +23,7 @@ export default function Home() {
           <Button
             variant="outline"
             asChild
-            className="bg-primary text-white font-semibold text-lg py-3 px-6 rounded-md hover:bg-primary hover:text-white hover:scale-105"
+            className="bg-primary text-white font-semibold text-lg py-6 px-6 rounded-md hover:bg-primary hover:text-white hover:scale-105"
           >
             <Link
               href="/dashboard"

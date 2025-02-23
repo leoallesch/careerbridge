@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import {useState} from "react";
+import {z} from "zod";
+import {useRouter} from "next/navigation";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
 import CardWrapper from "@/components/auth/card-wrapper";
 import {
   Form,
@@ -14,39 +14,39 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { authClient } from "@/lib/auth-client";
-import { toast } from "@/hooks/use-toast";
-import { OAuthButtons } from "@/components/auth/oauth-signin";
-import { passwordLength } from "@/utils/constants";
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {authClient} from "@/lib/auth-client";
+import {toast} from "@/hooks/use-toast";
+import {OAuthButtons} from "@/components/auth/oauth-signin";
+import {passwordLength} from "@/utils/constants";
 
 // Define the registration schema
-const RegisterSchema = z
+const RegisterSchema=z
   .object({
     email: z.string().email("Invalid email address"),
-    name: z.string().min(2, "Name must be at least 2 characters"),
+    name: z.string().min(2,"Name must be at least 2 characters"),
     password: z
       .string()
       .min(
         passwordLength,
-        "Password must be at least " + passwordLength + " characters"
+        "Password must be at least "+passwordLength+" characters"
       ),
     passwordConfirmation: z.string(),
   })
-  .refine((data) => data.password === data.passwordConfirmation, {
+  .refine((data) => data.password===data.passwordConfirmation,{
     message: "Passwords must match",
     path: ["passwordConfirmation"],
   });
 
-type RegisterFormValues = z.infer<typeof RegisterSchema>;
+type RegisterFormValues=z.infer<typeof RegisterSchema>;
 
 export default function Register() {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading,setLoading]=useState(false);
+  const router=useRouter();
 
   // Initialize the form
-  const form = useForm<RegisterFormValues>({
+  const form=useForm<RegisterFormValues>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: "",
@@ -57,18 +57,18 @@ export default function Register() {
   });
 
   // Handle form submission
-  const onSubmit = async (values: RegisterFormValues) => {
+  const onSubmit=async (values: RegisterFormValues) => {
     setLoading(true);
-    const { email, name, password } = values;
+    const {email,name,password}=values;
 
     await authClient.signUp.email(
-      { email, name, password },
+      {email,name,password},
       {
         onRequest: () => {
-          toast({ title: "Creating account..." });
+          toast({title: "Creating account..."});
         },
         onSuccess: () => {
-          toast({ title: "Account created! Redirecting..." });
+          toast({title: "Account created! Redirecting..."});
           form.reset();
 
           router.refresh();
@@ -93,7 +93,7 @@ export default function Register() {
         headerLabel="Create an account"
         title="Register"
         backButtons={[
-          { label: "Already have an account? Login", href: "/auth/login" },
+          {label: "Already have an account? Login",href: "/auth/login"},
         ]}
       >
         <Form {...form}>
@@ -101,7 +101,7 @@ export default function Register() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
@@ -119,7 +119,7 @@ export default function Register() {
             <FormField
               control={form.control}
               name="name"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
@@ -136,7 +136,7 @@ export default function Register() {
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
@@ -154,7 +154,7 @@ export default function Register() {
             <FormField
               control={form.control}
               name="passwordConfirmation"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
@@ -169,8 +169,8 @@ export default function Register() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Registering..." : "Register"}
+            <Button type="submit" className="w-full text-white" disabled={loading}>
+              {loading? "Registering...":"Register"}
             </Button>
           </form>
         </Form>
