@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { signOut, useSession } from "@/lib/auth-client";
+import React,{useState} from "react";
+import {signOut,useSession} from "@/lib/auth-client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import {useRouter} from "next/navigation";
+import {Avatar,AvatarFallback,AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -14,24 +14,24 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const UserButton: React.FC = () => {
-  const { data: session, isPending: sessionPending } = useSession();
-  const router = useRouter();
-  const [signOutPending, setSignOutPending] = useState(false); // Track sign-out state
+const UserButton: React.FC=() => {
+  const {data: session,isPending: sessionPending}=useSession();
+  const router=useRouter();
+  const [signOutPending,setSignOutPending]=useState(false); // Track sign-out state
 
-  const isPending = sessionPending || signOutPending; // Combine pending states
+  const isPending=sessionPending||signOutPending; // Combine pending states
 
-  const getInitials = (name?: string) => {
-    if (!name) return "U";
-    const names = name.split(" ");
+  const getInitials=(name?: string) => {
+    if(!name) return "U";
+    const names=name.split(" ");
     return names
       .map((n) => n[0])
       .join("")
-      .slice(0, 2)
+      .slice(0,2)
       .toUpperCase();
   };
 
-  const handleSignOut = async () => {
+  const handleSignOut=async () => {
     setSignOutPending(true); // Set pending state for sign-out
     try {
       await signOut({
@@ -40,18 +40,18 @@ const UserButton: React.FC = () => {
             router.push("/auth/login");
           },
           onError: (error) => {
-            console.error("Sign-out failed:", error);
+            console.error("Sign-out failed:",error);
           },
         },
       });
-    } catch (error) {
-      console.error("Unexpected error during sign-out:", error);
+    } catch(error) {
+      console.error("Unexpected error during sign-out:",error);
     } finally {
       setSignOutPending(false); // Reset pending state
     }
   };
 
-  if (isPending) {
+  if(isPending) {
     return (
       <Button variant="outline" disabled>
         Loading...
@@ -59,7 +59,7 @@ const UserButton: React.FC = () => {
     );
   }
 
-  if (!session?.user) {
+  if(!session?.user) {
     return (
       <Button
         variant="outline"
@@ -71,25 +71,26 @@ const UserButton: React.FC = () => {
     );
   }
 
-  const user = session.user;
+  const user=session.user;
 
   return (
     <div className="flex items-center space-x-4">
-      <Link href="/dashboard">Dashboard</Link>
+      <Link href="/dashboard/local" className="font-semibold font-1xl hover:scale-102 hover:font-bold hover:text-primary" >Local</Link>
+      <Link href="/dashboard" className="font-semibold font-1xl hover:scale-102 hover:font-bold hover:text-primary">Dashboard</Link>
       <Select
-        onValueChange={(value) => value === "signout" && handleSignOut()}
+        onValueChange={(value) => value==="signout"&&handleSignOut()}
         disabled={isPending} // Disable select during pending states
       >
         <SelectTrigger className="w-fit h-8 p-0 border-none">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.image || ""} alt={user.name || "User"} />
+            <AvatarImage src={user.image||""} alt={user.name||"User"} />
             <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
           </Avatar>
           <SelectValue placeholder="" />
         </SelectTrigger>
         <SelectContent>
           <div className="py-1 px-2">
-            <p className="text-sm font-medium">{user.name || "User"}</p>
+            <p className="text-sm font-medium">{user.name||"User"}</p>
           </div>
           <SelectItem value="signout" className="cursor-pointer">
             Sign Out

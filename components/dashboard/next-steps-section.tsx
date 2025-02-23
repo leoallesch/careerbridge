@@ -2,15 +2,25 @@ import {Card,CardContent} from "@/components/ui/card";
 import NextStepInfoCard from "@/components/dashboard/next-step-info-card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
 import {DefaultSectionProps} from "@/lib/types";
-import {Program} from "@prisma/client";
+import {Program as PrismaProgram} from "@prisma/client"; // Alias to avoid conflict
+
+// Extended Program type with optional fields
+interface ExtendedProgram extends PrismaProgram {
+  website?: string;
+  contactInfo?: string;
+  location?: string;
+  description?: string;
+}
 
 interface NextStepsSectionProps extends DefaultSectionProps {
-  savedPrograms: Program[];
-  selectedProgram: number|null; // Changed from string | null to number | null
-  handleProgramClick: (programId: number) => void; // Changed from string to number
+  title?: string;
+  savedPrograms: ExtendedProgram[]; // Use the extended type
+  selectedProgram: number|null;
+  handleProgramClick: (programId: number) => void;
 }
 
 export default function NextStepsSection({
+  title="Next Steps",
   savedPrograms,
   selectedProgram,
   handleProgramClick,
@@ -18,12 +28,12 @@ export default function NextStepsSection({
   className,
 }: NextStepsSectionProps) {
   const selectedProgramData=savedPrograms.find(
-    (program) => program.programId===selectedProgram // Now type-safe
+    (program) => program.programId===selectedProgram
   );
 
   return (
     <DashboardSection
-      title="Next Steps"
+      title={title}
       editHref={editHref}
       className={className}
     >
@@ -31,17 +41,18 @@ export default function NextStepsSection({
         {savedPrograms.length>0? (
           savedPrograms.map((program) => (
             <Card
-              key={program.programId} // Use programId as the key
+              key={program.programId}
               className={`cursor-pointer hover:bg-accent transition-colors ${selectedProgram===program.programId
                 ? "bg-accent border-2 border-primary"
                 :""
                 }`}
-              onClick={() => handleProgramClick(program.programId)} // Pass programId
+              onClick={() => handleProgramClick(program.programId)}
             >
               <CardContent className="p-4">
                 <h3 className="font-semibold">{program.programName}</h3>
                 <p className="text-sm text-muted-foreground">
                   {program.schoolName} - {program.timeToCompletion}
+                  {program.location&&` | ${program.location}`}
                 </p>
               </CardContent>
             </Card>
@@ -61,6 +72,10 @@ export default function NextStepsSection({
           duration={selectedProgramData.timeToCompletion}
           cost={selectedProgramData.costOfAttendance}
           jobPlacementRate={selectedProgramData.jobPlacement}
+          website={selectedProgramData.website} // Now type-safe
+          contactInfo={selectedProgramData.contactInfo} // Now type-safe
+          location={selectedProgramData.location} // Now type-safe
+          description={selectedProgramData.description} // Now type-safe
           className="mt-8 mb-8"
         />
       )}
