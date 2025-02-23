@@ -1,113 +1,107 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React,{useState,useEffect} from "react";
 import PageWrapper from "@/components/layout/page-wrapper";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {Tabs,TabsContent} from "@/components/ui/tabs";
 import NextStepsSection from "@/components/dashboard/next-steps-section";
-import { Job, Program } from "@prisma/client";
-import { useSession } from "@/lib/auth-client";
+import {Job,Program} from "@prisma/client";
+import {useSession} from "@/lib/auth-client";
+import JobsSection from "@/components/dashboard/jobs-section"; // Import the new component
 
 export default function JobTrainingTabs() {
-  const { data: session } = useSession(); // Still use useSession for userId, but no status check
-  const userId = session?.user?.id;
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
-  const [programsByJob, setProgramsByJob] = useState<Record<string, Program[]>>({});
-  const [selectedTab, setSelectedTab] = useState<string | null>(null);
-  const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {data: session}=useSession();
+  const userId=session?.user?.id;
+  const [savedJobs,setSavedJobs]=useState<Job[]>([]);
+  const [programsByJob,setProgramsByJob]=useState<Record<string,Program[]>>({});
+  const [selectedTab,setSelectedTab]=useState<string|null>(null);
+  const [selectedProgram,setSelectedProgram]=useState<number|null>(null);
+  const [loading,setLoading]=useState(true);
+  const [error,setError]=useState<string|null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData=async () => {
       try {
-        const savedJobsRes = await fetch(`/api/user-saved/job?userId=${userId}`);
-        if (!savedJobsRes.ok) {
-          const errorData = await savedJobsRes.json();
-          throw new Error(errorData.error || "Failed to fetch saved jobs");
+        const savedJobsRes=await fetch(`/api/user-saved/job?userId=${userId}`);
+        if(!savedJobsRes.ok) {
+          const errorData=await savedJobsRes.json();
+          throw new Error(errorData.error||"Failed to fetch saved jobs");
         }
-        const savedJobsData = await savedJobsRes.json();
-        const savedJobIds = savedJobsData.map((item: { jobId: number }) => item.jobId);
-        console.log("Saved Job IDs:", savedJobIds); // Debug log
+        const savedJobsData=await savedJobsRes.json();
+        const savedJobIds=savedJobsData.map((item: {jobId: number;}) => item.jobId);
 
-        if (savedJobIds.length === 0) {
+        if(savedJobIds.length===0) {
           setSavedJobs([]);
           setProgramsByJob({});
           setLoading(false);
           return;
         }
 
-        const jobsRes = await fetch(`/api/jobs?jobIds=${savedJobIds.join(",")}`);
-        if (!jobsRes.ok) {
-          const errorData = await jobsRes.json();
-          throw new Error(errorData.error || "Failed to fetch job details");
+        const jobsRes=await fetch(`/api/jobs?jobIds=${savedJobIds.join(",")}`);
+        if(!jobsRes.ok) {
+          const errorData=await jobsRes.json();
+          throw new Error(errorData.error||"Failed to fetch job details");
         }
-        const jobsData = await jobsRes.json();
+        const jobsData=await jobsRes.json();
         setSavedJobs(jobsData);
-        console.log("Fetched Jobs:", jobsData); // Debug log
 
-        const programsMap: Record<string, Program[]> = {};
-        for (const job of jobsData) {
-          const programsRes = await fetch(`/api/programs?industryId=${job.industryId}`);
-          if (!programsRes.ok) {
-            const errorData = await programsRes.json();
-            throw new Error(errorData.error || `Failed to fetch programs for ${job.jobTitle}`);
+        const programsMap: Record<string,Program[]>={};
+        for(const job of jobsData) {
+          const programsRes=await fetch(`/api/programs?industryId=${job.industryId}`);
+          if(!programsRes.ok) {
+            const errorData=await programsRes.json();
+            throw new Error(errorData.error||`Failed to fetch programs for ${job.jobTitle}`);
           }
-          const programsData = await programsRes.json();
-          console.log(`Programs for ${job.jobTitle}:`, programsData); // Debug log
-          programsMap[job.jobTitle] = programsData;
+          const programsData=await programsRes.json();
+          programsMap[job.jobTitle]=programsData;
         }
         setProgramsByJob(programsMap);
-        console.log("Programs by Job:", programsMap); // Debug log
 
-        if (jobsData.length > 0) {
+        if(jobsData.length>0) {
           setSelectedTab(jobsData[0].jobTitle);
         }
-      } catch (err) {
-        console.error("Error fetching data:", err);
-        setError(err instanceof Error ? err.message : "An error occurred");
+      } catch(err) {
+        console.error("Error fetching data:",err);
+        setError(err instanceof Error? err.message:"An error occurred");
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [userId]); // Only depend on userId since middleware ensures auth
+  },[userId]);
 
-  const handleProgramClick = (programName: string) => {
-    setSelectedProgram(selectedProgram === programName ? null : programName);
+  const handleTabClick=(jobTitle: string) => {
+    setSelectedTab(jobTitle);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (savedJobs.length === 0) return <div>No saved jobs found</div>;
+  const handleProgramClick=(programId: number) => {
+    setSelectedProgram((prev) => (prev===programId? null:programId));
+  };
 
-  console.log("Rendering with savedJobs:", savedJobs); // Debug log
-  console.log("Rendering with programsByJob:", programsByJob); // Debug log
+  if(loading) return <div>Loading...</div>;
+  if(error) return <div>Error: {error}</div>;
+  if(savedJobs.length===0) return <div>No saved jobs found</div>;
 
   return (
     <PageWrapper
       title="Next Steps"
       pageNavProps={{
-        back: { href: "/dashboard/compare", label: "Compare Jobs" },
-        forward: { href: "/dashboard", label: "Finish" },
+        back: {href: "/dashboard/compare",label: "Compare Jobs"},
+        forward: {href: "/dashboard",label: "Finish"},
       }}
     >
-      <Tabs value={selectedTab || ""} onValueChange={setSelectedTab}>
-        <TabsList className="flex space-x-4 border-b border-gray-200">
-          {savedJobs.map((job) => (
-            <TabsTrigger
-              key={job.jobId}
-              value={job.jobTitle}
-              className="text-lg font-medium px-4 py-2 rounded-md hover:bg-gray-100 transition-colors duration-200"
-            >
-              {job.jobTitle}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      <Tabs value={selectedTab||""} onValueChange={setSelectedTab}>
+        <JobsSection
+          title="Favorited Jobs"
+          jobs={savedJobs}
+          selectedJob={selectedTab}
+          handleJobClick={handleTabClick}
+          className="mb-6"
+        />
         {savedJobs.map((job) => (
           <TabsContent key={job.jobId} value={job.jobTitle} className="mt-6">
             <NextStepsSection
-              savedPrograms={programsByJob[job.jobTitle] || []}
+              savedPrograms={programsByJob[job.jobTitle]||[]}
               selectedProgram={selectedProgram}
               handleProgramClick={handleProgramClick}
               className="w-full"

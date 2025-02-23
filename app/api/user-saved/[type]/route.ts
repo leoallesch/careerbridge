@@ -60,8 +60,6 @@ export async function GET(
                     { status: 200 }
                 );
             default:
-                // This should never be reached due to the earlier type check,
-                // but included for TypeScript exhaustiveness and safety
                 return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
         }
     } catch (error) {
@@ -106,48 +104,42 @@ export async function POST(
     }
 
     try {
+        // Check for existing entry before creating
+        const existingEntry = await checkExistingEntry(type, userId, id);
+        if (existingEntry) {
+            return NextResponse.json(
+                { message: `${type} already saved for this user`, data: existingEntry },
+                { status: 200 } // Return 200 since it's not an error, just a duplicate
+            );
+        }
+
+        // If no duplicate, proceed with creation
         switch (type) {
             case 'job':
                 return NextResponse.json(
                     await prisma.userSavedJob.create({
-                        data: {
-                            userId,
-                            jobId: id,
-                            createdAt: new Date(),
-                        },
+                        data: { userId, jobId: id, createdAt: new Date() },
                     }),
                     { status: 201 }
                 );
             case 'program':
                 return NextResponse.json(
                     await prisma.userSavedProgram.create({
-                        data: {
-                            userId,
-                            programId: id,
-                            createdAt: new Date(),
-                        },
+                        data: { userId, programId: id, createdAt: new Date() },
                     }),
                     { status: 201 }
                 );
             case 'interest':
                 return NextResponse.json(
                     await prisma.userSavedInterest.create({
-                        data: {
-                            userId,
-                            interestId: id,
-                            createdAt: new Date(),
-                        },
+                        data: { userId, interestId: id, createdAt: new Date() },
                     }),
                     { status: 201 }
                 );
             case 'industry':
                 return NextResponse.json(
                     await prisma.userSavedIndustry.create({
-                        data: {
-                            userId,
-                            industryId: id,
-                            createdAt: new Date(),
-                        },
+                        data: { userId, industryId: id, createdAt: new Date() },
                     }),
                     { status: 201 }
                 );
@@ -155,11 +147,36 @@ export async function POST(
                 return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
         }
     } catch (error) {
-        console.error('Database error:', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        console.error('Database error:', errorMessage, error);
         return NextResponse.json(
-            { error: 'Failed to save item', details: error instanceof Error ? error.message : String(error) },
+            { error: 'Failed to save item', details: errorMessage },
             { status: 500 }
         );
+    }
+}
+
+// Helper function to check for existing entries
+async function checkExistingEntry(type: UserSavedType, userId: string, id: number) {
+    switch (type) {
+        case 'job':
+            return await prisma.userSavedJob.findUnique({
+                where: { userId_jobId: { userId, jobId: id } },
+            });
+        case 'program':
+            return await prisma.userSavedProgram.findUnique({
+                where: { userId_programId: { userId, programId: id } },
+            });
+        case 'interest':
+            return await prisma.userSavedInterest.findUnique({
+                where: { userId_interestId: { userId, interestId: id } },
+            });
+        case 'industry':
+            return await prisma.userSavedIndustry.findUnique({
+                where: { userId_industryId: { userId, industryId: id } },
+            });
+        default:
+            return null;
     }
 }
 
