@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import pdfParse from 'pdf-parse';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { interests } from '@/prisma/data/interests';
+import { interests } from './interests';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
