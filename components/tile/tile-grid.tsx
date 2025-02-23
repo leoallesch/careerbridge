@@ -1,9 +1,10 @@
-// components/TileGrid.tsx
+// components/tile/tile-grid.tsx
 import React from 'react';
 import {cn} from '@/lib/utils';
+import {TileProps} from './tile';
 
 interface TileGridProps {
-  children: React.ReactNode;
+  children: React.ReactElement<TileProps>|React.ReactElement<TileProps>[];
   rows?: number;
   columns?: number;
   className?: string;

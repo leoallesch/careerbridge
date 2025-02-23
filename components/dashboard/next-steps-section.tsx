@@ -1,13 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card";
+import {Card,CardContent} from "@/components/ui/card";
 import NextStepInfoCard from "@/components/dashboard/next-step-info-card";
 import DashboardSection from "@/components/dashboard/dashboard-section";
-import { DefaultSectionProps } from "@/lib/types";
-import { Program } from "@prisma/client";
+import {DefaultSectionProps} from "@/lib/types";
+import {Program} from "@prisma/client";
 
 interface NextStepsSectionProps extends DefaultSectionProps {
   savedPrograms: Program[];
-  selectedProgram: string | null;
-  handleProgramClick: (programName: string) => void;
+  selectedProgram: number|null; // Changed from string | null to number | null
+  handleProgramClick: (programId: number) => void; // Changed from string to number
 }
 
 export default function NextStepsSection({
@@ -17,8 +17,8 @@ export default function NextStepsSection({
   editHref,
   className,
 }: NextStepsSectionProps) {
-  const selectedProgramData = savedPrograms.find(
-    (program) => program.programName === selectedProgram
+  const selectedProgramData=savedPrograms.find(
+    (program) => program.programId===selectedProgram // Now type-safe
   );
 
   return (
@@ -28,16 +28,15 @@ export default function NextStepsSection({
       className={className}
     >
       <div className="space-y-4">
-        {savedPrograms.length > 0 ? (
-          savedPrograms.map((program, index) => (
+        {savedPrograms.length>0? (
+          savedPrograms.map((program) => (
             <Card
-              key={index}
-              className={`cursor-pointer hover:bg-accent transition-colors ${
-                selectedProgram === program.programName
-                  ? "bg-accent border-2 border-primary"
-                  : ""
-              }`}
-              onClick={() => handleProgramClick(program.programName)}
+              key={program.programId} // Use programId as the key
+              className={`cursor-pointer hover:bg-accent transition-colors ${selectedProgram===program.programId
+                ? "bg-accent border-2 border-primary"
+                :""
+                }`}
+              onClick={() => handleProgramClick(program.programId)} // Pass programId
             >
               <CardContent className="p-4">
                 <h3 className="font-semibold">{program.programName}</h3>
@@ -47,7 +46,7 @@ export default function NextStepsSection({
               </CardContent>
             </Card>
           ))
-        ) : (
+        ):(
           <p className="text-muted-foreground">
             No saved programs yet. Add some trade school programs to get
             started!
@@ -55,7 +54,7 @@ export default function NextStepsSection({
         )}
       </div>
 
-      {selectedProgramData && (
+      {selectedProgramData&&(
         <NextStepInfoCard
           name={selectedProgramData.programName}
           school={selectedProgramData.schoolName}

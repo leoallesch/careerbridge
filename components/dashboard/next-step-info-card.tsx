@@ -9,14 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import {Label} from "@/components/ui/label";
 
 interface NextStepInfoCardProps {
   name: string;
   school: string;
-  duration: string | number;
-  cost: string | number;
-  jobPlacementRate: string | number;
+  duration: string|number;
+  cost: string|number;
+  jobPlacementRate: string|number;
   className?: string;
 }
 
@@ -36,14 +36,14 @@ export default function NextStepInfoCard({
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
-          <Label className="font-semibold">Duration</Label>
+          <Label className="font-semibold">Duration (in years)</Label>
           <p className="text-muted-foreground">{duration}</p>
         </div>
 
         <div className="grid gap-2">
-          <Label className="font-semibold">Cost</Label>
+          <Label className="font-semibold">Cost (yearly)</Label>
           <p className="text-muted-foreground">
-            {typeof cost === "number" ? `$${cost.toLocaleString()}` : cost}
+            {typeof cost==="number"? `$${cost.toLocaleString()}`:cost}
           </p>
         </div>
 

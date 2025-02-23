@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageNav, PageNavProps } from "./page-nav";
+import {Card,CardContent,CardHeader,CardTitle} from "@/components/ui/card";
+import {PageNav,PageNavProps} from "./page-nav";
 
 interface PageWrapperProps {
   children: React.ReactNode;
@@ -20,9 +20,9 @@ export default function PageWrapper({
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className={`w-full max-w-4xl mx-auto ${className}`}>
-        {title && (
+        {title&&(
           <CardHeader>
-            <CardTitle>{title}</CardTitle>
+            <CardTitle className="text-2xl">{title}</CardTitle>
           </CardHeader>
         )}
         <CardContent className="p-0">
