@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {ArrowRight} from "lucide-react";
 import Link from "next/link";
 import DashboardSection from "@/components/dashboard/dashboard-section";
-import { DefaultSectionProps } from "@/lib/types";
+import {DefaultSectionProps} from "@/lib/types";
+import {LuSparkles} from "react-icons/lu";
 
 export default function PathwayExplorationSection({
   editHref,
@@ -18,13 +19,25 @@ export default function PathwayExplorationSection({
         <Button
           variant="outline"
           asChild
+          className="bg-primary text-white font-semibold text-lg pl-3 pr-3 pt-3 pb-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
+        >
+          <Link
+            href="/dashboard/interests"
+            className="flex items-center justify-between"
+          >
+            <LuSparkles />AI Skills Builder <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+        <Button
+          variant="outline"
+          asChild
           className="bg-primary text-white font-semibold text-lg pl-3 pr-3 rounded-md hover:bg-primary hover:text-white hover:scale-110"
         >
           <Link
             href="/dashboard/interests"
             className="flex items-center justify-between"
           >
-            Get Started <ArrowRight className="ml-2 h-5 w-5" />
+            Skills Builder <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>
       </div>
