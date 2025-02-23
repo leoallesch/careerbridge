@@ -21,7 +21,7 @@ export default function DashboardSection({
   className,
 }: DashboardSectionProps) {
   return (
-    <Card className={`mb-8 ${className}`}>
+    <Card className={`mb-8 bg-white ${className}`}>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-2xl">{title}</CardTitle>
         {editHref&&(

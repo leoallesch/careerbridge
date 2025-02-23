@@ -18,8 +18,8 @@ export default function PageWrapper({
   className,
 }: PageWrapperProps) {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className={`w-full max-w-4xl mx-auto ${className}`}>
+    <div className="min-h-screen flex items-center justify-center p-4 ">
+      <Card className={`w-full max-w-4xl mx-auto bg-white ${className}`}>
         {title&&(
           <CardHeader>
             <CardTitle className="text-2xl">{title}</CardTitle>

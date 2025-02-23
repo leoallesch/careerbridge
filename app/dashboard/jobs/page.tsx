@@ -152,7 +152,7 @@ const JobsPage=() => {
 
   return (
     <PageWrapper
-      title="Select an industry to explore jobs, favorite the ones you are interested in"
+      title="Select an industry to explore jobs, favorite the ones you are interested in!"
       pageNavProps={{
         back: {href: "/dashboard/interests",label: "See Interests"},
         forward: {href: "/dashboard/compare",label: "Compare Jobs"},
