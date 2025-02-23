@@ -1,4 +1,4 @@
-exports.jobs=[
+exports.jobs = [
   // Industry 1: Healthcare Support Occupations
   {
     jobId: 1,

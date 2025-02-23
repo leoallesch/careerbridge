@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react"
 export const authClient = createAuthClient({
-    baseURL: "https://careerbridge-gules.vercel.app" // the base url of your auth server
+    baseURL: process.env.BETTER_AUTH_URL as string || "http://localhost:3000" // the base url of your auth server
 })
 
 export const {

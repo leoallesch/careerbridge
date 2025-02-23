@@ -1,4 +1,4 @@
-[
+exports.programs = [
   // Industry 1: Healthcare Support Occupations (Occupational Therapy Aide, Dental Assistant)
   {
     programId: 1,
