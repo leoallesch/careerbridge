@@ -11,8 +11,6 @@
     "seed": "ts-node prisma/seed"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.743.0",
-    "@aws-sdk/lib-dynamodb": "^3.743.0",
     "@google/generative-ai": "^0.22.0",
     "@hookform/resolvers": "^3.10.0",
     "@prisma/client": "^6.4.1",
