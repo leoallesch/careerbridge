@@ -1,6 +1,6 @@
 # careerbridge
 
-## 2025 KYCombinator HackKentucky Hackathon
+## 2025 KYCombinator HackKentucky Hackathon (2nd Place Project)
 ## Team Redbird - Leo Allesch, Ritesh Dhakal, Cole Swinford, Jacob Collins
 
 ## Trade School Pathfinder Bounty Project
